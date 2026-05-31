@@ -1,19 +1,5 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
-import { v2 as cloudinary } from "cloudinary"
-
-const cloudName = process.env.CLOUDINARY_CLOUD_NAME
-const apiKey = process.env.CLOUDINARY_API_KEY
-const apiSecret = process.env.CLOUDINARY_API_SECRET
-
-if (cloudName && apiKey && apiSecret) {
-  cloudinary.config({
-    cloud_name: cloudName,
-    api_key: apiKey,
-    api_secret: apiSecret,
-    secure: true,
-  })
-}
 
 export async function POST(request: Request) {
   try {
@@ -31,81 +17,86 @@ export async function POST(request: Request) {
       )
     }
 
-    let resumeUrl = ""
-
-    if (cloudName && apiKey && apiSecret) {
-      // Convert file buffer for Cloudinary stream upload
-      const arrayBuffer = await resumeFile.arrayBuffer()
-      const buffer = Buffer.from(arrayBuffer)
-
-      const uploadResult = await new Promise<any>((resolve, reject) => {
-        const uploadStream = cloudinary.uploader.upload_stream(
-          {
-            resource_type: "raw", // Raw type allows uploading non-image assets like PDFs
-            folder: "resumes",
-            public_id: `${Date.now()}-${resumeFile.name.replace(/\.[^/.]+$/, "")}`,
-          },
-          (error, result) => {
-            if (error) reject(error)
-            else resolve(result)
-          }
-        )
-        uploadStream.end(buffer)
-      })
-
-      resumeUrl = uploadResult.secure_url
-    } else {
-      console.warn("Cloudinary not configured. Mocking resume upload URL.")
-      resumeUrl = "https://res.cloudinary.com/demo/image/upload/sample_resume.pdf"
-    }
-
     // Connect to Supabase
     const sbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const sbKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-    if (sbUrl && sbKey) {
-      const supabase = createClient(sbUrl, sbKey)
-
-      const { error } = await supabase
-        .from("careers")
-        .insert([
-          {
-            name,
-            email,
-            phone,
-            cover_letter: coverLetter,
-            resume_url: resumeUrl,
-            created_at: new Date().toISOString()
-          }
-        ])
-
-      if (error) {
-        console.error("Supabase insert error:", error)
-        
-        // If table doesn't exist, log instructions to create it but succeed anyway
-        if (error.code === "PGRST116" || error.message.includes("does not exist")) {
-          console.warn("Table 'careers' does not exist in Supabase. Returning success. Run this SQL query to create the table:")
-          console.log(`
-            create table public.careers (
-              id uuid not null default extensions.uuid_generate_v4(),
-              name text not null,
-              email text not null,
-              phone text not null,
-              cover_letter text,
-              resume_url text not null,
-              created_at timestamp with time zone not null default timezone('utc'::text, now()),
-              constraint careers_pkey primary key (id)
-            );
-          `)
-        } else {
-          return NextResponse.json(
-            { success: false, error: "Database error: " + error.message },
-            { status: 500 }
-          )
-        }
-      }
-    } else {
+    if (!sbUrl || !sbKey) {
       console.warn("Supabase credentials not configured. Mocking database save.")
+      return NextResponse.json({
+        success: true,
+        message: "Application submitted successfully (mocked)",
+        data: { name, email, resumeUrl: "https://example.com/mock_resume.pdf" }
+      })
+    }
+
+    const supabase = createClient(sbUrl, sbKey)
+
+    // Upload resume to Supabase Storage
+    const fileName = `${Date.now()}-${resumeFile.name.replace(/[^a-zA-Z0-9.\-_]/g, "")}`
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("resumes")
+      .upload(fileName, resumeFile, {
+        contentType: resumeFile.type || "application/pdf",
+        upsert: false,
+      })
+
+    if (uploadError) {
+      console.error("Supabase storage upload error:", uploadError)
+
+      let errorMessage = uploadError.message
+      if (uploadError.message.includes("row-level security policy")) {
+        errorMessage = "RLS Error: You are trying to upload to a private bucket. Please either add 'SUPABASE_SERVICE_ROLE_KEY' to your .env file to bypass RLS on the server, OR go to your Supabase Dashboard and add an RLS policy allowing INSERT operations for the 'resumes' bucket."
+      }
+
+      return NextResponse.json(
+        { success: false, error: errorMessage },
+        { status: 500 }
+      )
+    }
+
+    // For private buckets, store the file path instead of a public URL.
+    // The admin dashboard will use this path to generate signed URLs when viewing.
+    const resumeUrl = fileName
+
+    const { error: dbError } = await supabase
+      .from("careers")
+      .insert([
+        {
+          name,
+          email,
+          phone,
+          cover_letter: coverLetter,
+          resume_url: resumeUrl,
+          created_at: new Date().toISOString()
+        }
+      ])
+
+    if (dbError) {
+      console.error("Supabase insert error:", dbError)
+
+      // If table doesn't exist, log instructions to create it but succeed anyway
+      if (dbError.code === "PGRST116" || dbError.message.includes("does not exist")) {
+        console.warn("Table 'careers' does not exist in Supabase. Returning success. Run this SQL query to create the table:")
+        console.log(`
+          create table public.careers (
+            id uuid not null default extensions.uuid_generate_v4(),
+            name text not null,
+            email text not null,
+            phone text not null,
+            cover_letter text,
+            resume_url text not null,
+            created_at timestamp with time zone not null default timezone('utc'::text, now()),
+            constraint careers_pkey primary key (id)
+          );
+        `)
+      } else {
+        return NextResponse.json(
+          { success: false, error: "Database error: " + dbError.message },
+          { status: 500 }
+        )
+      }
     }
 
     return NextResponse.json({
