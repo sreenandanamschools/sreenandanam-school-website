@@ -14,7 +14,6 @@ export async function GET() {
       .order("published_at", { ascending: false })
 
     if (error) {
-      console.error("Supabase news fetch error:", error)
       return NextResponse.json({ success: false, error: error.message }, { status: 500 })
     }
 

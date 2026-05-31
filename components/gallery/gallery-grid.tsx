@@ -66,7 +66,6 @@ export function GalleryGrid() {
           setImages([])
         }
       } catch (error) {
-        console.error("Failed to fetch gallery images:", error)
         setImages([])
       } finally {
         setLoading(false)

@@ -22,7 +22,6 @@ export async function POST(request: Request) {
     const sbKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
     if (!sbUrl || !sbKey) {
-      console.warn("Supabase credentials not configured. Mocking database save.")
       return NextResponse.json({
         success: true,
         message: "Application submitted successfully (mocked)",
@@ -43,7 +42,6 @@ export async function POST(request: Request) {
       })
 
     if (uploadError) {
-      console.error("Supabase storage upload error:", uploadError)
 
       let errorMessage = uploadError.message
       if (uploadError.message.includes("row-level security policy")) {
@@ -74,23 +72,11 @@ export async function POST(request: Request) {
       ])
 
     if (dbError) {
-      console.error("Supabase insert error:", dbError)
 
       // If table doesn't exist, log instructions to create it but succeed anyway
       if (dbError.code === "PGRST116" || dbError.message.includes("does not exist")) {
-        console.warn("Table 'careers' does not exist in Supabase. Returning success. Run this SQL query to create the table:")
-        console.log(`
-          create table public.careers (
-            id uuid not null default extensions.uuid_generate_v4(),
-            name text not null,
-            email text not null,
-            phone text not null,
-            cover_letter text,
-            resume_url text not null,
-            created_at timestamp with time zone not null default timezone('utc'::text, now()),
-            constraint careers_pkey primary key (id)
-          );
-        `)
+        // Table doesn't exist, but we succeed anyway
+
       } else {
         return NextResponse.json(
           { success: false, error: "Database error: " + dbError.message },
@@ -106,7 +92,6 @@ export async function POST(request: Request) {
     })
 
   } catch (error: any) {
-    console.error("Career application POST error:", error)
     return NextResponse.json(
       { success: false, error: error.message || "Internal server error" },
       { status: 500 }

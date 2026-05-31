@@ -43,7 +43,6 @@ export function UpcomingEvents() {
         const json = await res.json()
         if (json.success) setEvents(json.data)
       } catch (err) {
-        console.error("Failed to fetch events:", err)
       } finally {
         setLoading(false)
       }

@@ -21,7 +21,6 @@ export async function GET() {
       .order("visited_at", { ascending: false })
 
     if (error) {
-      console.error("Supabase famous_visitors fetch error:", error)
       return NextResponse.json(
         { success: false, error: error.message },
         { status: 500 }
@@ -30,7 +29,6 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data })
   } catch (err: any) {
-    console.error("Famous visitors API error:", err)
     return NextResponse.json(
       { success: false, error: err.message || "Internal server error" },
       { status: 500 }

@@ -80,7 +80,6 @@ export function HistorySection() {
           setVisitors(json.data)
         }
       } catch (err) {
-        console.error("Failed to fetch famous visitors:", err)
       } finally {
         setVisitorsLoading(false)
       }

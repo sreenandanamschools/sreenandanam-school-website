@@ -51,13 +51,11 @@ export function AnnouncementsSection() {
     fetch("/api/announcements")
       .then(r => r.json())
       .then(json => { if (json.success) setAnnouncements(json.data) })
-      .catch(err => console.error("announcements fetch error:", err))
       .finally(() => setLoading(false))
 
     fetch("/api/events")
       .then(r => r.json())
       .then(json => { if (json.success) setEvents(json.data.slice(0, 3)) })
-      .catch(err => console.error("events fetch error:", err))
       .finally(() => setEventsLoading(false))
   }, [])
 

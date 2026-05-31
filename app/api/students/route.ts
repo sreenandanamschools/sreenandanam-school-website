@@ -96,7 +96,6 @@ export async function GET(request: Request) {
       }
 
       if (error) {
-        console.error("Supabase student fetch error:", error)
         return NextResponse.json({ success: false, error: error.message }, { status: 500 })
       }
 
@@ -115,7 +114,6 @@ export async function GET(request: Request) {
       .order("full_name", { ascending: true })
 
     if (error) {
-      console.error("Supabase students fetch error:", error)
       return NextResponse.json({ success: false, error: error.message }, { status: 500 })
     }
 

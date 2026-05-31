@@ -34,7 +34,6 @@ export async function GET() {
       images,
     })
   } catch (error: any) {
-    console.error("Supabase gallery fetch error:", error)
     return NextResponse.json({
       success: false,
       error: error.message || "Failed to fetch gallery images from Supabase database.",

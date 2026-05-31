@@ -118,7 +118,6 @@ export function CareerForm() {
         setError(result.error || "Something went wrong. Please try again.")
       }
     } catch (err) {
-      console.error(err)
       setError("Network error. Please check your connection and try again.")
     } finally {
       setLoading(false)

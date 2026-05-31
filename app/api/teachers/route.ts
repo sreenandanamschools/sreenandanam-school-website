@@ -23,7 +23,6 @@ export async function GET(request: Request) {
       .maybeSingle()
 
     if (error) {
-      console.error("Supabase teacher fetch error:", error)
       return NextResponse.json({ success: false, error: error.message }, { status: 500 })
     }
 

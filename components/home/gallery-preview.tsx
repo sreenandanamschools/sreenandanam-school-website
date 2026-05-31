@@ -47,7 +47,6 @@ export function GalleryPreview() {
           setImages(data.images.slice(0, 6))
         }
       } catch (error) {
-        console.error("Failed to fetch gallery preview:", error)
         setImages([])
       } finally {
         setLoading(false)

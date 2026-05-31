@@ -23,7 +23,6 @@ export async function GET(request: Request) {
       .order("event_date", { ascending: showAll ? false : true })
 
     if (error) {
-      console.error("Supabase events fetch error:", error)
       return NextResponse.json({ success: false, error: error.message }, { status: 500 })
     }
 

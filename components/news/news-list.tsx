@@ -46,7 +46,6 @@ export function NewsList() {
         const json = await res.json();
         if (json.success) setAnnouncements(json.data);
       } catch (err) {
-        console.error("Failed to fetch announcements:", err);
       } finally {
         setAnnouncementsLoading(false);
       }
