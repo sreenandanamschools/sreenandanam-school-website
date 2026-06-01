@@ -36,7 +36,9 @@ export function HeadTeacherMessage() {
               <h2
                 className={cn(
                   "font-serif text-3xl md:text-4xl font-bold text-foreground transition-all duration-700",
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4",
                 )}
               >
                 Message from the Managing Director
@@ -45,7 +47,9 @@ export function HeadTeacherMessage() {
             <div
               className={cn(
                 "bg-card rounded-2xl p-8 xl:p-10 border border-border relative flex-1 transition-all duration-700 delay-100",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4",
               )}
             >
               <div className="absolute -top-6 left-8 w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
@@ -70,10 +74,17 @@ export function HeadTeacherMessage() {
                   <blockquote className="text-muted-foreground leading-relaxed space-y-4 text-sm md:text-base">
                     <p>Dear Parents and Students,</p>
                     <p>
-                      Welcome to Sreenandanam Schools. We believe that education goes beyond simply acquiring knowledge—it is the vital foundation for building strong character, true confidence, creativity, and deep compassion.
+                      Welcome to Sreenandanam Schools. We believe that education
+                      goes beyond simply acquiring knowledge—it is the vital
+                      foundation for building strong character, true confidence,
+                      creativity, and deep compassion.
                     </p>
                     <p>
-                      Our mission is to nurture young minds in a safe and inspiring environment, combining modern learning methods with essential moral values. Together with our dedicated teachers, we help every child discover their true potential and shape responsible future citizens.
+                      Our mission is to nurture young minds in a safe and
+                      inspiring environment, combining modern learning methods
+                      with essential moral values. Together with our dedicated
+                      teachers, we help every child discover their true
+                      potential and shape responsible future citizens.
                     </p>
                     <p>Thank you for being part of our family.</p>
                     <p className="font-medium text-foreground">
@@ -93,7 +104,9 @@ export function HeadTeacherMessage() {
               <h2
                 className={cn(
                   "font-serif text-3xl md:text-4xl font-bold text-foreground transition-all duration-700",
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4",
                 )}
               >
                 Message from the Principal
@@ -102,7 +115,9 @@ export function HeadTeacherMessage() {
             <div
               className={cn(
                 "bg-card rounded-2xl p-8 xl:p-10 border border-border relative flex-1 transition-all duration-700 delay-200",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4",
               )}
             >
               <div className="absolute -top-6 left-8 w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
@@ -125,10 +140,18 @@ export function HeadTeacherMessage() {
                   <blockquote className="text-muted-foreground leading-relaxed space-y-4 text-sm md:text-base">
                     <p>Dear Parents and Students,</p>
                     <p>
-                      Welcome to Sreenandanam Schools. We believe that every child is wonderfully unique—each possessing limitless potential and the profound ability to make a positive, lasting impact on the world.
+                      Welcome to Sreenandanam Schools. We believe that every
+                      child is wonderfully unique—each possessing limitless
+                      potential and the profound ability to make a positive,
+                      lasting impact on the world.
                     </p>
                     <p>
-                      Our goal is to ignite that spark in a vibrant and stimulating environment, seamlessly blending modern teaching with traditional values. Together with your vital support, we ensure holistic development and shape compassionate global citizens ready for tomorrow's challenges.
+                      Our goal is to ignite that spark in a vibrant and
+                      stimulating environment, seamlessly blending modern
+                      teaching with traditional values. Together with your vital
+                      support, we ensure holistic development and shape
+                      compassionate global citizens ready for tomorrow's
+                      challenges.
                     </p>
                     <p>Thank you for your continued partnership.</p>
                     <p className="font-medium text-foreground">
@@ -149,7 +172,9 @@ export function HeadTeacherMessage() {
             <h2
               className={cn(
                 "font-serif text-3xl md:text-4xl font-bold text-foreground transition-all duration-700",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4",
               )}
             >
               Our Head Teachers
@@ -161,7 +186,9 @@ export function HeadTeacherMessage() {
             <div
               className={cn(
                 "bg-card rounded-2xl p-8 border border-border flex flex-col items-center text-center transition-all duration-700 delay-300 hover:shadow-lg hover:border-primary/30",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4",
               )}
             >
               <div className="w-32 h-32 bg-muted rounded-full overflow-hidden flex items-center justify-center mb-6 shadow-md border-4 border-background">
@@ -170,11 +197,11 @@ export function HeadTeacherMessage() {
               <h3 className="font-serif text-xl font-semibold text-foreground mb-1">
                 BINU PRABHA.P.T
               </h3>
-              <p className="text-sm text-muted-foreground mb-3">Qualifications</p>
+              <p className="text-sm text-muted-foreground mb-3">
+                Upper Primary
+              </p>
               <div className="px-4 py-1.5 bg-primary/10 rounded-full">
-                <p className="text-primary font-medium text-sm">
-                  Head Teacher
-                </p>
+                <p className="text-primary font-medium text-sm">Head Teacher</p>
               </div>
             </div>
 
@@ -182,20 +209,20 @@ export function HeadTeacherMessage() {
             <div
               className={cn(
                 "bg-card rounded-2xl p-8 border border-border flex flex-col items-center text-center transition-all duration-700 delay-400 hover:shadow-lg hover:border-primary/30",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4",
               )}
             >
               <div className="w-32 h-32 bg-muted rounded-full overflow-hidden flex items-center justify-center mb-6 shadow-md border-4 border-background">
                 <User className="w-12 h-12 text-muted-foreground/30" />
               </div>
               <h3 className="font-serif text-xl font-semibold text-foreground mb-1">
-                Head Teacher Name
+                SUJITHA JIGIN
               </h3>
-              <p className="text-sm text-muted-foreground mb-3">Qualifications</p>
+              <p className="text-sm text-muted-foreground mb-3">Kindergarten</p>
               <div className="px-4 py-1.5 bg-primary/10 rounded-full">
-                <p className="text-primary font-medium text-sm">
-                  Head Teacher
-                </p>
+                <p className="text-primary font-medium text-sm">Head Teacher</p>
               </div>
             </div>
           </div>

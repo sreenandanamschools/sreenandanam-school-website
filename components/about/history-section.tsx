@@ -74,18 +74,18 @@ export function HistorySection() {
   useEffect(() => {
     async function fetchVisitors() {
       try {
-        const res = await fetch("/api/famous-visitors")
-        const json = await res.json()
+        const res = await fetch("/api/honorary-guests");
+        const json = await res.json();
         if (json.success) {
-          setVisitors(json.data)
+          setVisitors(json.data);
         }
       } catch (err) {
       } finally {
-        setVisitorsLoading(false)
+        setVisitorsLoading(false);
       }
     }
-    fetchVisitors()
-  }, [])
+    fetchVisitors();
+  }, []);
 
   return (
     <section ref={sectionRef} className="py-16 md:py-24 bg-card">
@@ -228,7 +228,7 @@ export function HistorySection() {
           </div>
         </div>
 
-        {/* Famous Visitors Section */}
+        {/* Honorary Guests Section */}
         <div className="mt-24">
           <div className="text-center mb-12">
             <h2
@@ -239,7 +239,7 @@ export function HistorySection() {
                   : "opacity-0 translate-y-4",
               )}
             >
-              Famous Visitors
+              Honorary Guests
             </h2>
             <p
               className={cn(
@@ -249,7 +249,8 @@ export function HistorySection() {
                   : "opacity-0 translate-y-4",
               )}
             >
-              Over the years, we have been honored to host several distinguished personalities who have inspired our students and staff.
+              Over the years, we have been honored to host several distinguished
+              personalities who have inspired our students and staff.
             </p>
           </div>
 
@@ -257,8 +258,11 @@ export function HistorySection() {
           {visitorsLoading && (
             <div className="grid md:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-background rounded-2xl overflow-hidden border border-border animate-pulse">
-                  <div className="aspect-[4/3] bg-muted" />
+                <div
+                  key={i}
+                  className="bg-background rounded-2xl overflow-hidden border border-border animate-pulse"
+                >
+                  <div className="aspect-4/3 bg-muted" />
                   <div className="p-6 space-y-3">
                     <div className="h-5 bg-muted rounded w-3/4" />
                     <div className="h-4 bg-muted rounded w-1/2" />
@@ -284,7 +288,7 @@ export function HistorySection() {
                   )}
                   style={{ transitionDelay: `${(index + 2) * 100}ms` }}
                 >
-                  <div className="aspect-[4/3] bg-muted relative overflow-hidden">
+                  <div className="aspect-4/3 bg-muted relative overflow-hidden">
                     {visitor.image_url ? (
                       <Image
                         src={visitor.image_url}
@@ -319,7 +323,7 @@ export function HistorySection() {
           {!visitorsLoading && visitors.length === 0 && (
             <div className="text-center py-16 text-muted-foreground">
               <UserCircle2 className="w-12 h-12 mx-auto mb-4 opacity-30" />
-              <p className="text-sm">No visitor records found.</p>
+              <p className="text-sm">No records found.</p>
             </div>
           )}
         </div>
@@ -327,4 +331,3 @@ export function HistorySection() {
     </section>
   );
 }
-
