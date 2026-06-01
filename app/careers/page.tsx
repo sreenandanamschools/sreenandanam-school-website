@@ -8,6 +8,9 @@ import { CareerForm } from "@/components/careers/career-form";
 export const metadata: Metadata = {
   title: "Careers - Sree Nandanam Public School",
   description: "Build your career at SREE NANDANAM PUBLIC SCHOOL. Explore our available job openings and opportunities to join our team of passionate educators.",
+  alternates: {
+    canonical: "/careers",
+  },
 };
 
 const benefits = [

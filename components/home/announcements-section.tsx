@@ -2,8 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
-import { Calendar, ArrowRight, Clock, Megaphone } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Calendar, Clock, Megaphone, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface Announcement {
@@ -32,16 +31,16 @@ function formatTime(timeStr: string) {
 export function AnnouncementsSection() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-
   const [announcements, setAnnouncements] = useState<Announcement[]>([])
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [eventsLoading, setEventsLoading] = useState(true)
+  const [expandedId, setExpandedId] = useState<string | null>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     )
     if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
@@ -55,193 +54,207 @@ export function AnnouncementsSection() {
 
     fetch("/api/events")
       .then(r => r.json())
-      .then(json => { if (json.success) setEvents(json.data.slice(0, 3)) })
+      .then(json => { if (json.success) setEvents(json.data.slice(0, 4)) })
       .finally(() => setEventsLoading(false))
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-secondary/50">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-          <div>
-            <p className={cn(
-              "text-primary font-medium mb-2 transition-all duration-700",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}>
-              Stay Updated
-            </p>
-            <h2 className={cn(
-              "font-serif text-3xl md:text-4xl font-bold text-foreground transition-all duration-700 delay-100",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}>
-              Announcements
-            </h2>
-          </div>
-          <Button
-            asChild
-            variant="outline"
-            className={cn(
-              "transition-all duration-700 delay-200",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            <Link href="/news">
-              View All
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-          </Button>
-        </div>
+    <section ref={sectionRef} className="bg-background border-t border-border">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="grid lg:grid-cols-[240px_1fr_280px] gap-0 divide-y lg:divide-y-0 lg:divide-x divide-border">
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Announcements Column */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* ── Sticky label column ────────────────────── */}
+          <div className="py-10 lg:py-16 lg:pr-8">
+            <div className="lg:sticky lg:top-32">
+              <p className={cn(
+                "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-3 transition-all duration-700",
+                isVisible ? "opacity-100" : "opacity-0"
+              )}>
+                Stay Updated
+              </p>
+              <h2 className={cn(
+                "font-serif text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight transition-all duration-700 delay-100",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}>
+                School
+                <br />
+                <em>Notices</em>
+              </h2>
+              <p className={cn(
+                "text-muted-foreground text-sm leading-relaxed mb-8 transition-all duration-700 delay-200",
+                isVisible ? "opacity-100" : "opacity-0"
+              )}>
+                Important communications for students, parents, and staff.
+              </p>
+              <Link
+                href="/news"
+                className={cn(
+                  "inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all duration-300 link-underline",
+                  isVisible ? "opacity-100" : "opacity-0"
+                )}
+              >
+                View all notices <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* ── Announcements list ─────────────────────── */}
+          <div className="py-10 lg:py-16 lg:px-10">
+
             {/* Skeletons */}
             {loading && [1, 2, 3].map(i => (
-              <div key={i} className="bg-card rounded-xl p-5 border border-border animate-pulse">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-muted rounded-lg shrink-0" />
+              <div key={i} className="border-b border-border py-5 animate-pulse">
+                <div className="flex gap-4 items-start">
+                  <div className="w-16 h-4 bg-muted rounded shrink-0" />
                   <div className="flex-1 space-y-2">
-                    <div className="flex gap-2">
-                      <div className="h-4 w-20 bg-muted rounded" />
-                      <div className="h-4 w-24 bg-muted rounded" />
-                    </div>
                     <div className="h-4 w-3/4 bg-muted rounded" />
                     <div className="h-3 w-full bg-muted rounded" />
-                    <div className="h-3 w-5/6 bg-muted rounded" />
                   </div>
                 </div>
               </div>
             ))}
 
-            {/* Announcement Cards */}
-            {!loading && announcements.map((item, index) => (
-              <div
-                key={item.id}
-                className={cn(
-                  "group bg-card rounded-xl p-5 md:p-6 border border-border border-l-4 border-l-accent hover:shadow-md transition-all duration-500",
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                )}
-                style={{ transitionDelay: `${(index + 3) * 100}ms` }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
-                    <Megaphone className="w-5 h-5 text-accent" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded capitalize">
-                        {item.type}
-                      </span>
-                      <span className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded">
-                        {item.target_audience}
-                      </span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
+            {/* Announcement timeline rows */}
+            {!loading && announcements.map((item, index) => {
+              const isExpanded = expandedId === item.id
+              return (
+                <div
+                  key={item.id}
+                  className={cn(
+                    "border-b border-border last:border-b-0 transition-all duration-700",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  )}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                >
+                  <button
+                    onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                    className="w-full py-5 flex items-start gap-4 text-left group hover:bg-secondary/40 transition-colors duration-200 px-2 rounded-sm -mx-2"
+                  >
+                    {/* Date pill */}
+                    <div className="shrink-0 pt-0.5">
+                      <span className="text-xs text-muted-foreground font-mono whitespace-nowrap">
                         {new Date(item.published_date).toLocaleDateString("en-IN", {
-                          day: "numeric", month: "short", year: "numeric"
+                          day: "2-digit", month: "short"
                         })}
                       </span>
                     </div>
-                    <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {item.content}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
 
-            {/* Empty state */}
+                    {/* Dot */}
+                    <div className="relative mt-1.5 shrink-0">
+                      <div className={cn(
+                        "w-2 h-2 rounded-full transition-colors duration-300",
+                        isExpanded ? "bg-primary" : "bg-border group-hover:bg-primary/60"
+                      )} />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <span className={cn(
+                          "text-xs font-semibold capitalize px-2 py-0.5 rounded-sm",
+                          item.type === "general" ? "bg-secondary text-foreground"
+                          : item.type === "academic" ? "bg-primary/10 text-primary"
+                          : "bg-[var(--gold)]/10 text-[var(--gold-foreground)]"
+                        )}>
+                          {item.type}
+                        </span>
+                        <span className="text-xs text-muted-foreground">{item.target_audience}</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm md:text-base leading-snug">
+                        {item.title}
+                      </h3>
+                      {/* Expand */}
+                      <div className={cn(
+                        "overflow-hidden transition-all duration-400",
+                        isExpanded ? "max-h-40 mt-3" : "max-h-0"
+                      )}>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{item.content}</p>
+                      </div>
+                    </div>
+
+                    {/* Chevron */}
+                    <span className={cn(
+                      "text-muted-foreground shrink-0 text-lg leading-none transition-transform duration-300",
+                      isExpanded ? "rotate-45" : ""
+                    )}>
+                      +
+                    </span>
+                  </button>
+                </div>
+              )
+            })}
+
             {!loading && announcements.length === 0 && (
-              <div className="text-center py-12 text-muted-foreground">
-                <Megaphone className="w-8 h-8 mx-auto mb-2 opacity-30" />
+              <div className="py-16 text-center text-muted-foreground">
+                <Megaphone className="w-8 h-8 mx-auto mb-3 opacity-20" />
                 <p className="text-sm">No announcements at this time.</p>
               </div>
             )}
           </div>
 
-          {/* Upcoming Events Column */}
-          <div className={cn(
-            "bg-card rounded-xl border border-border p-6 transition-all duration-700 delay-500",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          )}>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-accent" />
+          {/* ── Events sidebar ─────────────────────────── */}
+          <div className="py-10 lg:py-16 lg:pl-8">
+            <div className="lg:sticky lg:top-32">
+              <div className="flex items-center gap-2 mb-6">
+                <Calendar className="w-4 h-4 text-primary" />
+                <h3 className="font-serif text-lg font-bold text-foreground">Upcoming Events</h3>
               </div>
-              <h3 className="font-serif text-xl font-semibold text-foreground">
-                Upcoming Events
-              </h3>
-            </div>
 
-            {/* Skeletons */}
-            {eventsLoading && (
-              <div className="space-y-4">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="flex gap-4 p-3 animate-pulse">
-                    <div className="w-14 h-14 bg-muted rounded-lg shrink-0" />
-                    <div className="flex-1 space-y-2">
-                      <div className="h-4 bg-muted rounded w-3/4" />
-                      <div className="h-3 bg-muted rounded w-1/2" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+              {/* Skeletons */}
+              {eventsLoading && [1, 2, 3].map(i => (
+                <div key={i} className="mb-4 animate-pulse">
+                  <div className="h-16 bg-muted rounded-sm" />
+                </div>
+              ))}
 
-            {/* Event Cards */}
-            {!eventsLoading && events.length > 0 && (
-              <div className="space-y-4">
-                {events.map((event) => {
-                  const dateObj = new Date(event.event_date)
-                  const day = dateObj.getUTCDate()
-                  const month = dateObj.toLocaleString("en", { month: "short" })
-                  return (
-                    <div
-                      key={event.id}
-                      className="group flex items-start gap-4 p-3 rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer"
-                    >
-                      <div className="w-14 h-14 bg-primary/10 rounded-lg flex flex-col items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        <span className="text-lg font-bold text-primary group-hover:text-primary-foreground">
-                          {day}
-                        </span>
-                        <span className="text-xs text-primary/80 group-hover:text-primary-foreground/80 uppercase">
-                          {month}
-                        </span>
+              {/* Event cards */}
+              {!eventsLoading && events.length > 0 && (
+                <div className="space-y-3">
+                  {events.map((event) => {
+                    const dateObj = new Date(event.event_date)
+                    const day = dateObj.getUTCDate()
+                    const month = dateObj.toLocaleString("en", { month: "short" }).toUpperCase()
+                    return (
+                      <div
+                        key={event.id}
+                        className="group flex items-stretch gap-4 rounded-sm border border-border hover:border-primary/30 hover:bg-secondary/30 transition-all duration-300 p-4 cursor-pointer"
+                      >
+                        {/* Date block */}
+                        <div className="shrink-0 flex flex-col items-center justify-center w-12 border-r border-border pr-4">
+                          <span className="font-serif text-xl font-bold text-primary leading-none">{day}</span>
+                          <span className="text-[10px] font-bold text-muted-foreground tracking-wider mt-0.5">{month}</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors leading-snug mb-1">
+                            {event.title}
+                          </h4>
+                          <p className="text-xs text-muted-foreground flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {formatTime(event.event_time)}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
-                          {event.title}
-                        </h4>
-                        <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
-                          <Clock className="w-3 h-3" />
-                          {formatTime(event.event_time)}
-                        </p>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
+                    )
+                  })}
+                </div>
+              )}
 
-            {/* Empty state */}
-            {!eventsLoading && events.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
-                <Calendar className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                <p className="text-sm">No upcoming events.</p>
-              </div>
-            )}
+              {!eventsLoading && events.length === 0 && (
+                <div className="py-8 text-center text-muted-foreground">
+                  <Calendar className="w-7 h-7 mx-auto mb-2 opacity-20" />
+                  <p className="text-xs">No upcoming events.</p>
+                </div>
+              )}
 
-            <Button asChild variant="ghost" className="w-full mt-4">
-              <Link href="/events">
-                View All Events
-                <ArrowRight className="ml-2 w-4 h-4" />
+              <Link
+                href="/events"
+                className="inline-flex items-center gap-2 mt-5 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors link-underline"
+              >
+                All events <ArrowUpRight className="w-3 h-3" />
               </Link>
-            </Button>
+            </div>
           </div>
+
         </div>
       </div>
     </section>

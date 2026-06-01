@@ -9,6 +9,9 @@ import { CurriculumOverview } from "@/components/academics/curriculum-overview"
 export const metadata: Metadata = {
   title: "Academics",
   description: "Explore our comprehensive academic programs from Class 1 to Class 7. English medium education with modern teaching methodologies and computer-aided learning.",
+  alternates: {
+    canonical: "/academics",
+  },
 }
 
 export default function AcademicsPage() {

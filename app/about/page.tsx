@@ -11,6 +11,9 @@ import { MentalHealthSection } from "@/components/about/mental-health-section"
 export const metadata: Metadata = {
   title: "About Us",
   description: "Learn about SREE NANDANAM PUBLIC SCHOOL's history, vision, mission, and values. Established in 2003, we provide quality education in Parassala, Kerala.",
+  alternates: {
+    canonical: "/about",
+  },
 }
 
 export default function AboutPage() {

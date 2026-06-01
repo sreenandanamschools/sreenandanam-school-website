@@ -6,6 +6,9 @@ import { PageHero } from "@/components/shared/page-hero";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms and Conditions for Sree Nandanam Public School.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsOfServicePage() {

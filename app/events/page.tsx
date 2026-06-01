@@ -7,6 +7,9 @@ import { EventsList } from "@/components/events/events-list"
 export const metadata: Metadata = {
   title: "Events",
   description: "View all upcoming and past events at SREE NANDANAM PUBLIC SCHOOL. Stay informed about school activities, celebrations, and important dates.",
+  alternates: {
+    canonical: "/events",
+  },
 }
 
 export default function EventsPage() {

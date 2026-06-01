@@ -11,55 +11,50 @@ export function AboutHero() {
   }, []);
 
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/assembly.jpg)' }}
+    <section className="relative overflow-hidden bg-[var(--ink)]" style={{ minHeight: "52vh" }}>
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url(/images/assembly.jpg)" }}
       />
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      {/* Left gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl">
-          {/* Breadcrumb */}
-          <p
-            className={cn(
-              "text-primary-foreground/90 font-medium mb-4 transition-all duration-700",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
+      {/* Diagonal bottom cut */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-16 bg-background"
+        style={{ clipPath: "polygon(0 100%, 100% 100%, 100% 0)" }}
+      />
+
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 pt-36 pb-24 md:pt-44 md:pb-28">
+        {/* Breadcrumb label */}
+        <div className={cn(
+          "flex items-center gap-3 mb-6 transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        )}>
+          <span className="h-px w-8 bg-[var(--gold)]" />
+          <p className="text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase">
             Home / About Us
           </p>
-
-          {/* Title */}
-          <h1
-            className={cn(
-              "font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 transition-all duration-700 delay-100",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            About Our School
-          </h1>
-
-          {/* Description */}
-          <p
-            className={cn(
-              "text-lg md:text-xl text-white/90 leading-relaxed transition-all duration-700 delay-200",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Since 2008, Sree Nandanam Public School has been dedicated to
-            nurturing young minds and building bright futures in the heart of
-            Parassala, Kerala.
-          </p>
         </div>
+
+        <h1 className={cn(
+          "font-serif font-bold text-white leading-tight mb-5 text-balance max-w-2xl transition-all duration-700 delay-100",
+          "text-4xl sm:text-5xl md:text-6xl",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        )}>
+          About Our School
+        </h1>
+
+        <p className={cn(
+          "text-white/70 leading-relaxed max-w-xl transition-all duration-700 delay-200",
+          "text-base md:text-lg",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        )}>
+          Since 2008, Sree Nandanam Public School has been dedicated to
+          nurturing young minds and building bright futures in the heart of
+          Parassala, Kerala.
+        </p>
       </div>
     </section>
   );

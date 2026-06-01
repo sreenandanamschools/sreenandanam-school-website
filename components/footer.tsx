@@ -7,6 +7,7 @@ import {
   Facebook,
   Instagram,
   Youtube,
+  ArrowUpRight,
 } from "lucide-react";
 
 const quickLinks = [
@@ -22,168 +23,152 @@ const quickLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background">
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* School Info */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-3 mb-4">
-              <img src="/images/logo.png" alt="Logo" width={150} height={150} />
-            </Link>
-            <p className="text-background/80 text-sm leading-relaxed mb-4">
-              Nurturing young minds since 2008. We provide quality English
-              medium education for students from Class 1 to Class 7 in a
-              supportive learning environment.
-            </p>
-            <p className="text-xs text-background/60 mb-6">
-              UDISE Code: 32140900331
-            </p>
-            {/* Social Links */}
-            <div className="flex items-center gap-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-background/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300"
-                aria-label="Facebook"
+    <footer className="bg-[var(--ink)] text-white">
+
+      {/* ── Masthead tier ──────────────────────────── */}
+      <div className="border-b border-white/10">
+        <div className="container mx-auto px-4 lg:px-8 py-14 lg:py-16">
+          <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8">
+
+            {/* Brand */}
+            <div className="max-w-md">
+              <Link href="/" className="inline-block mb-5">
+                <img
+                  src="/images/logo.png"
+                  alt="Sree Nandanam Public School"
+                  width={140}
+                  height={50}
+                  className="brightness-0 invert opacity-90"
+                />
+              </Link>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Nurturing young minds since 2008. Quality English medium education
+                from Class 1 to Class 7 in the heart of Parassala, Kerala.
+              </p>
+              <p className="text-white/25 text-xs mt-3 font-mono">
+                UDISE Code: 32140900331
+              </p>
+            </div>
+
+            {/* Social + CTA */}
+            <div className="flex flex-col items-start lg:items-end gap-5">
+              {/* Social */}
+              <div className="flex items-center gap-3">
+                {[
+                  { href: "https://facebook.com", Icon: Facebook, label: "Facebook" },
+                  { href: "https://instagram.com", Icon: Instagram, label: "Instagram" },
+                  { href: "https://youtube.com", Icon: Youtube, label: "YouTube" },
+                ].map(({ href, Icon, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="w-9 h-9 rounded-sm border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-all duration-300"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                ))}
+              </div>
+
+              {/* Admissions CTA */}
+              <Link
+                href="/contact#contact-form"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--gold)] text-[var(--gold-foreground)] text-sm font-bold rounded-sm hover:bg-[var(--gold)]/90 transition-all duration-300 group"
               >
-                <Facebook className="w-4.5 h-4.5" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-background/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4.5 h-4.5" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-background/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-4.5 h-4.5" />
-              </a>
+                Apply for Admission
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* ── Info tier ──────────────────────────────── */}
+      <div className="container mx-auto px-4 lg:px-8 py-10 lg:py-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-4">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
+            <p className="text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase mb-5">
+              Navigation
+            </p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-background/80 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-white/60 hover:text-white transition-colors duration-200 link-underline after:bg-white/60"
+                >
+                  {link.label}
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-4">
-              Contact Us
-            </h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 mt-1 text-primary shrink-0" />
-                <span className="text-sm text-background/80">
-                  Parassala, Thiruvananthapuram,
-                  <br />
-                  Kerala, India
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Phone className="w-4 h-4 mt-1 text-primary shrink-0" />
-                <div className="flex flex-col text-sm text-background/80">
-                  <a
-                    href="tel:+919745433356"
-                    className="hover:text-primary transition-colors"
-                  >
-                    +91 97454 33356
-                  </a>
-                  <a
-                    href="tel:+919745433357"
-                    className="hover:text-primary transition-colors"
-                  >
-                    +91 97454 33357
-                  </a>
+            <p className="text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase mb-5">
+              Contact
+            </p>
+            <ul className="space-y-3.5">
+              <li className="flex items-start gap-3 group">
+                <MapPin className="w-3.5 h-3.5 text-white/30 mt-0.5 shrink-0 group-hover:text-[var(--gold)] transition-colors" />
+                <div className="flex flex-col gap-2 text-sm text-white/60 leading-relaxed">
+                  <span>
+                    <strong className="text-white/85 font-semibold">Primary Campus:</strong> Near KSRTC Depot, Kurumkutty, Parassala, Kerala - 695502
+                  </span>
+                  <span>
+                    <strong className="text-white/85 font-semibold">Kindergarten:</strong> Near Mahadeva Temple, Parassala, Kerala - 695502
+                  </span>
                 </div>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-primary shrink-0" />
-                <a
-                  href="mailto:sreenandadnamschools@gmail.com"
-                  className="text-sm text-background/80 hover:text-primary transition-colors truncate"
-                >
+              <li className="flex items-start gap-3 group">
+                <Phone className="w-3.5 h-3.5 text-white/30 mt-0.5 shrink-0 group-hover:text-[var(--gold)] transition-colors" />
+                <div className="flex flex-col gap-0.5">
+                  <a href="tel:+919745433356" className="text-sm text-white/60 hover:text-white transition-colors">+91 97454 33356</a>
+                  <a href="tel:+919745433357" className="text-sm text-white/60 hover:text-white transition-colors">+91 97454 33357</a>
+                </div>
+              </li>
+              <li className="flex items-center gap-3 group">
+                <Mail className="w-3.5 h-3.5 text-white/30 shrink-0 group-hover:text-[var(--gold)] transition-colors" />
+                <a href="mailto:sreenandadnamschools@gmail.com" className="text-sm text-white/60 hover:text-white transition-colors truncate">
                   sreenandadnamschools@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-sm text-background/80">
-                  Mon - Sat: 8:00 AM - 4:00 PM
-                </span>
+                <Clock className="w-3.5 h-3.5 text-white/30 shrink-0" />
+                <span className="text-sm text-white/60">Mon – Sat: 8:00 AM – 4:00 PM</span>
               </li>
             </ul>
           </div>
 
-          {/* Newsletter / Updates */}
-          <div>
-            <h3 className="font-serif text-lg font-semibold mb-4">
-              Stay Updated
-            </h3>
-            <p className="text-background/80 text-sm leading-relaxed mb-4">
-              Subscribe to receive the latest updates, calendar announcements,
-              and event notifications.
+          {/* Tagline / Slogan snippet */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            <p className="text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase mb-5">
+              Our Slogan
             </p>
-            <div className="flex flex-col gap-2">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="px-4 py-2 bg-background/10 border border-background/20 rounded-md text-sm text-white placeholder:text-background/40 focus:outline-none focus:border-primary transition-colors"
-              />
-              <button
-                type="button"
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/95 transition-colors"
-              >
-                Subscribe
-              </button>
-            </div>
+            <blockquote className="font-serif text-xl md:text-2xl text-white/70 italic leading-relaxed border-l-2 border-[var(--gold)]/40 pl-5">
+              &ldquo;Your child deserves a smile.&rdquo;
+            </blockquote>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-background/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-background/60">
-              {new Date().getFullYear()} Sree Nandanam Public School. All rights
-              reserved.
-            </p>
-            <div className="flex items-center gap-6">
-              <Link
-                href="/privacy"
-                className="text-sm text-background/60 hover:text-primary transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="/terms"
-                className="text-sm text-background/60 hover:text-primary transition-colors"
-              >
-                Terms of Service
-              </Link>
-            </div>
+      {/* ── Bottom bar ─────────────────────────────── */}
+      <div className="border-t border-white/5">
+        <div className="container mx-auto px-4 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p className="text-white/25 text-xs">
+            © {new Date().getFullYear()} Sree Nandanam Public School. All rights reserved.
+          </p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="text-white/25 text-xs hover:text-white/60 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-white/25 text-xs hover:text-white/60 transition-colors">
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

@@ -6,6 +6,9 @@ import { PageHero } from "@/components/shared/page-hero";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy for Sree Nandanam Public School.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPolicyPage() {
