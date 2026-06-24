@@ -3,26 +3,30 @@
 import { useEffect, useState, useRef } from "react"
 import { cn } from "@/lib/utils"
 
-const subjects = [
+const subjectGroups = [
   {
     category: "Languages",
     items: ["English", "Hindi", "Malayalam"],
-    color: "bg-primary/10 text-primary",
+    bg: "bg-primary text-primary-foreground",
+    itemStyle: "border-primary-foreground/20 text-primary-foreground/90",
   },
   {
     category: "Core Subjects",
     items: ["Mathematics", "Science", "Social Studies"],
-    color: "bg-accent/10 text-accent",
+    bg: "bg-[var(--gold)] text-[var(--gold-foreground)]",
+    itemStyle: "border-[var(--gold-foreground)]/20 text-[var(--gold-foreground)]/90",
   },
   {
     category: "Co-Curricular",
     items: ["Computer Science", "Art & Craft", "Physical Education"],
-    color: "bg-primary/10 text-primary",
+    bg: "bg-foreground text-background",
+    itemStyle: "border-background/20 text-background/80",
   },
   {
     category: "Value Education",
     items: ["Moral Science", "Environmental Studies", "Life Skills"],
-    color: "bg-accent/10 text-accent",
+    bg: "bg-secondary text-foreground",
+    itemStyle: "border-border text-muted-foreground",
   },
 ]
 
@@ -32,107 +36,86 @@ export function CurriculumOverview() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
+      { threshold: 0.05 }
     )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-secondary/30">
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Content */}
-          <div>
-            <p
-              className={cn(
-                "text-primary font-medium mb-2 transition-all duration-700",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
+    <section ref={sectionRef} className="py-20 md:py-28 bg-background">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-16 items-start">
+
+          {/* Left sticky label */}
+          <div className="lg:sticky lg:top-32">
+            <p className={cn(
+              "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-4 transition-all duration-700",
+              isVisible ? "opacity-100" : "opacity-0"
+            )}>
               What We Teach
             </p>
-            <h2
-              className={cn(
-                "font-serif text-3xl md:text-4xl font-bold text-foreground mb-6 transition-all duration-700 delay-100",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
-              Curriculum Overview
+            <h2 className={cn(
+              "font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6 transition-all duration-700 delay-100",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Curriculum
+              <br />
+              <em>Overview</em>
             </h2>
-            <div
-              className={cn(
-                "space-y-4 text-muted-foreground leading-relaxed transition-all duration-700 delay-200",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
+            <div className={cn(
+              "space-y-4 text-muted-foreground text-sm leading-relaxed transition-all duration-700 delay-200",
+              isVisible ? "opacity-100" : "opacity-0"
+            )}>
               <p>
-                Our curriculum is designed to provide a well-rounded education 
-                that prepares students for future academic success while nurturing 
-                their overall development.
+                Our curriculum provides a well-rounded education that prepares students
+                for future success while nurturing overall development.
               </p>
               <p>
-                We follow a comprehensive syllabus that covers core subjects, 
-                languages, and co-curricular activities, ensuring students 
-                receive exposure to diverse areas of knowledge and skill 
-                development.
-              </p>
-              <p>
-                Special emphasis is placed on English proficiency, as we are 
-                an English medium institution committed to helping students 
-                communicate effectively in the global language.
+                Special emphasis is placed on English proficiency and practical learning
+                experiences across all subject areas.
               </p>
             </div>
 
-            {/* Academic Year Info */}
-            <div
-              className={cn(
-                "mt-8 p-6 bg-card rounded-xl border border-border transition-all duration-700 delay-300",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
-              <h4 className="font-semibold text-foreground mb-3">Academic Year</h4>
-              <p className="text-muted-foreground text-sm">
-                The academic session starts in <span className="font-medium text-foreground">April</span> each year. 
-                Classes are conducted Monday through Saturday with regular assessments 
-                and examinations to track student progress.
+            {/* Academic year info */}
+            <div className={cn(
+              "mt-8 border-t border-border pt-6 transition-all duration-700 delay-300",
+              isVisible ? "opacity-100" : "opacity-0"
+            )}>
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Academic Year</p>
+              <p className="text-sm text-foreground">
+                Starts in <strong>April</strong> each year. Mon–Sat with regular assessments.
               </p>
             </div>
           </div>
 
-          {/* Right - Subject Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            {subjects.map((subject, index) => (
+          {/* Subject grid */}
+          <div className={cn(
+            "grid grid-cols-1 sm:grid-cols-2 gap-4 transition-all duration-700 delay-200",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}>
+            {subjectGroups.map((group, index) => (
               <div
-                key={subject.category}
+                key={group.category}
                 className={cn(
-                  "bg-card rounded-xl p-5 border border-border hover:shadow-md transition-all duration-500",
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  "rounded-sm p-6 transition-all duration-700",
+                  group.bg,
                 )}
-                style={{ transitionDelay: `${(index + 4) * 100}ms` }}
+                style={{ transitionDelay: `${(index + 3) * 80}ms` }}
               >
-                <span className={cn(
-                  "inline-block px-3 py-1 rounded-full text-xs font-medium mb-3",
-                  subject.color
-                )}>
-                  {subject.category}
-                </span>
-                <ul className="space-y-2">
-                  {subject.items.map((item) => (
+                <h3 className="font-bold text-sm uppercase tracking-widest mb-5 opacity-70">
+                  {group.category}
+                </h3>
+                <ul className="space-y-2.5">
+                  {group.items.map(item => (
                     <li
                       key={item}
-                      className="text-sm text-muted-foreground flex items-center gap-2"
+                      className={cn(
+                        "text-base font-medium border-b pb-2.5 last:border-b-0 last:pb-0",
+                        group.itemStyle
+                      )}
                     >
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full" />
                       {item}
                     </li>
                   ))}

@@ -2,14 +2,14 @@
 
 import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
-import { 
-  GraduationCap, 
-  Users, 
-  Monitor, 
-  BookOpen, 
-  TreePine, 
+import {
+  GraduationCap,
+  Users,
+  Monitor,
+  BookOpen,
+  TreePine,
   Heart,
-  ArrowRight
+  ArrowUpRight,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -19,42 +19,54 @@ const highlights = [
     title: "Quality Education",
     description: "Comprehensive curriculum from Class 1 to Class 7 with English as the medium of instruction.",
     href: "/academics",
-    color: "bg-primary/10 text-primary",
+    label: "01",
+    accent: "bg-primary text-primary-foreground",
+    size: "large", // double-wide
   },
   {
     icon: Users,
     title: "Dedicated Faculty",
     description: "11 qualified and caring teachers committed to nurturing every student's potential.",
-    href: "/faculty",
-    color: "bg-accent/10 text-accent",
+    href: "/about",
+    label: "02",
+    accent: "bg-[var(--gold)] text-[var(--gold-foreground)]",
+    size: "tall", // double-height
   },
   {
     icon: Monitor,
     title: "Computer Lab",
-    description: "Modern computer-aided learning lab with 5 functional systems for digital literacy.",
+    description: "5 functional systems for digital literacy and computer-aided learning.",
     href: "/facilities#computer-lab",
-    color: "bg-primary/10 text-primary",
+    label: "03",
+    accent: "bg-foreground text-background",
+    size: "standard",
   },
   {
     icon: BookOpen,
     title: "Library",
-    description: "Access to reading resources that encourage curiosity and a love for learning.",
+    description: "A rich reading resource to encourage curiosity and a love for learning.",
     href: "/facilities#library",
-    color: "bg-accent/10 text-accent",
+    label: "04",
+    accent: "bg-secondary text-secondary-foreground",
+    size: "standard",
   },
   {
     icon: TreePine,
     title: "Playground",
-    description: "Spacious outdoor area for physical activities, sports, and healthy development.",
+    description: "Spacious outdoor area for sports and healthy physical development.",
     href: "/facilities#playground",
-    color: "bg-primary/10 text-primary",
+    label: "05",
+    accent: "bg-primary/10 text-primary",
+    size: "standard",
   },
   {
     icon: Heart,
     title: "Holistic Development",
-    description: "Focus on academic excellence alongside character building and creative growth.",
+    description: "Academic excellence alongside character building and creative growth.",
     href: "/about#values",
-    color: "bg-accent/10 text-accent",
+    label: "06",
+    accent: "bg-[var(--gold)]/10 text-[var(--gold-foreground)]",
+    size: "wide", // double-wide
   },
 ]
 
@@ -64,88 +76,163 @@ export function HighlightsSection() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
+      { threshold: 0.05 }
     )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p
+    <section ref={sectionRef} className="py-20 md:py-28 bg-background overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8">
+
+        {/* Section header — editorial style */}
+        <div className="flex items-end justify-between mb-12 md:mb-16">
+          <div className="max-w-xl">
+            <p className={cn(
+              "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-4 transition-all duration-700",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Why Choose Us
+            </p>
+            <h2 className={cn(
+              "font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight transition-all duration-700 delay-100",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              What Makes Us
+              <br />
+              <em>Different</em>
+            </h2>
+          </div>
+          <Link
+            href="/about"
             className={cn(
-              "text-primary font-medium mb-2 transition-all duration-700",
+              "hidden md:inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-all duration-300 link-underline delay-200",
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Why Choose Us
-          </p>
-          <h2
-            className={cn(
-              "font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 transition-all duration-700 delay-100",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            School Highlights
-          </h2>
-          <p
-            className={cn(
-              "text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-200",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            Discover what makes Sree Nandanam Public School a unique and 
-            nurturing environment for your child's education.
-          </p>
+            Learn More <ArrowUpRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        {/* Highlights Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {highlights.map((item, index) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className={cn(
-                "group relative bg-card rounded-2xl p-6 md:p-8 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-500",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-              style={{ transitionDelay: `${(index + 3) * 100}ms` }}
-            >
-              {/* Icon */}
-              <div className={cn(
-                "w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110",
-                item.color
-              )}>
-                <item.icon className="w-7 h-7" />
-              </div>
+        {/* Bento grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
 
-              {/* Content */}
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                {item.description}
-              </p>
+          {/* Cell 1 — Large (spans 2 cols) */}
+          {(() => { const Icon0 = highlights[0].icon; return (
+          <Link
+            href={highlights[0].href}
+            className={cn(
+              "group col-span-2 row-span-1 rounded-lg p-6 md:p-8 bg-primary text-primary-foreground flex flex-col justify-between min-h-40 md:min-h-48 overflow-hidden relative transition-all duration-700",
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{ transitionDelay: "100ms" }}
+          >
+            <div className="absolute top-0 right-0 text-8xl font-serif font-bold text-white/5 leading-none select-none -translate-y-4 translate-x-4">
+              {highlights[0].label}
+            </div>
+            <Icon0 className="w-8 h-8 text-primary-foreground/80 mb-4" />
+            <div>
+              <h3 className="font-serif text-2xl md:text-3xl font-bold mb-2">{highlights[0].title}</h3>
+              <p className="text-primary-foreground/75 text-sm leading-relaxed max-w-xs">{highlights[0].description}</p>
+            </div>
+            <ArrowUpRight className="absolute bottom-5 right-5 w-5 h-5 text-white/40 group-hover:text-white transition-colors duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 transform" />
+          </Link>
+          ); })()}
 
-              {/* Learn More Link */}
-              <div className="flex items-center gap-2 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                Learn more
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </div>
-            </Link>
-          ))}
+          {/* Cell 2 — Tall (spans 2 rows) */}
+          {(() => { const Icon1 = highlights[1].icon; return (
+          <Link
+            href={highlights[1].href}
+            className={cn(
+              "group col-span-1 row-span-2 rounded-lg p-6 bg-[var(--gold)] text-[var(--gold-foreground)] flex flex-col justify-between min-h-64 overflow-hidden relative transition-all duration-700",
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <div className="absolute bottom-0 right-0 text-9xl font-serif font-bold text-[var(--gold-foreground)]/5 leading-none select-none translate-y-6 translate-x-2">
+              {highlights[1].label}
+            </div>
+            <Icon1 className="w-7 h-7 text-[var(--gold-foreground)]/70 mb-3" />
+            <div>
+              <h3 className="font-serif text-xl font-bold mb-2">{highlights[1].title}</h3>
+              <p className="text-[var(--gold-foreground)]/70 text-sm leading-relaxed">{highlights[1].description}</p>
+            </div>
+          </Link>
+          ); })()}
+
+          {/* Cell 3 */}
+          {(() => { const Icon2 = highlights[2].icon; return (
+          <Link
+            href={highlights[2].href}
+            className={cn(
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-foreground text-background flex flex-col justify-between overflow-hidden relative transition-all duration-700",
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{ transitionDelay: "300ms" }}
+          >
+            <Icon2 className="w-6 h-6 text-background/60 mb-3" />
+            <div>
+              <h3 className="font-semibold text-base mb-1">{highlights[2].title}</h3>
+              <p className="text-background/60 text-xs leading-relaxed">{highlights[2].description}</p>
+            </div>
+          </Link>
+          ); })()}
+
+          {/* Cell 4 — standard */}
+          {(() => { const Icon3 = highlights[3].icon; return (
+          <Link
+            href={highlights[3].href}
+            className={cn(
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-secondary border border-border hover:border-primary/30 flex flex-col justify-between transition-all duration-500",
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{ transitionDelay: "350ms" }}
+          >
+            <Icon3 className="w-6 h-6 text-primary/60 mb-3 group-hover:text-primary transition-colors" />
+            <div>
+              <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{highlights[3].title}</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed">{highlights[3].description}</p>
+            </div>
+          </Link>
+          ); })()}
+
+          {/* Cell 5 — standard */}
+          {(() => { const Icon4 = highlights[4].icon; return (
+          <Link
+            href={highlights[4].href}
+            className={cn(
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-card border border-border hover:border-primary/30 flex flex-col justify-between transition-all duration-500",
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{ transitionDelay: "400ms" }}
+          >
+            <Icon4 className="w-6 h-6 text-primary/60 mb-3 group-hover:text-primary transition-colors" />
+            <div>
+              <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{highlights[4].title}</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed">{highlights[4].description}</p>
+            </div>
+          </Link>
+          ); })()}
+
+          {/* Cell 6 — standard */}
+          {(() => { const Icon5 = highlights[5].icon; return (
+          <Link
+            href={highlights[5].href}
+            className={cn(
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-primary/5 border border-primary/15 hover:bg-primary/10 hover:border-primary/30 flex flex-col justify-between transition-all duration-500",
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{ transitionDelay: "450ms" }}
+          >
+            <Icon5 className="w-6 h-6 text-primary mb-3" />
+            <div>
+              <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{highlights[5].title}</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed">{highlights[5].description}</p>
+            </div>
+          </Link>
+          ); })()}
         </div>
       </div>
     </section>

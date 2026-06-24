@@ -24,11 +24,7 @@ const steps = [
     title: "Submit Documents",
     description:
       "Complete the application form carefully and submit it along with all required documents to the school office for verification.",
-    details: [
-      "Fill form completely",
-      "Attach all documents",
-      "Submit at school office",
-    ],
+    details: ["Fill form completely", "Attach all documents", "Submit at school office"],
   },
   {
     icon: UserCheck,
@@ -36,11 +32,7 @@ const steps = [
     title: "Interaction Session",
     description:
       "Parents and students will be invited for an informal interaction session with the school administration to understand expectations.",
-    details: [
-      "Meet with Head Teacher",
-      "School orientation",
-      "Address queries",
-    ],
+    details: ["Meet with Head Teacher", "School orientation", "Address queries"],
   },
   {
     icon: CheckCircle,
@@ -48,11 +40,7 @@ const steps = [
     title: "Admission Confirmation",
     description:
       "Upon successful review, admission will be confirmed. Complete the fee payment and collect the admission acknowledgment.",
-    details: [
-      "Confirmation notification",
-      "Fee payment",
-      "Receive admission kit",
-    ],
+    details: ["Confirmation notification", "Fee payment", "Receive admission kit"],
   },
 ];
 
@@ -62,148 +50,142 @@ export function AdmissionProcess() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.05 },
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p
-            className={cn(
-              "text-primary font-medium mb-2 transition-all duration-700",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Step by Step
-          </p>
-          <h2
-            className={cn(
-              "font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 transition-all duration-700 delay-100",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Admission Process
-          </h2>
-          <p
-            className={cn(
-              "text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-200",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Follow these simple steps to secure your child's admission at Sree
-            Nandanam Public School.
+    <section ref={sectionRef} className="py-20 md:py-28 bg-background overflow-hidden border-b border-border">
+      <div className="container mx-auto px-4 lg:px-8">
+
+        {/* Header */}
+        <div className="flex items-end justify-between mb-16 md:mb-20">
+          <div>
+            <p className={cn(
+              "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-4 transition-all duration-700",
+              isVisible ? "opacity-100" : "opacity-0"
+            )}>
+              Step by Step
+            </p>
+            <h2 className={cn(
+              "font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight transition-all duration-700 delay-100",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Admission
+              <br />
+              <em>Process</em>
+            </h2>
+          </div>
+          <p className={cn(
+            "hidden md:block text-muted-foreground max-w-xs text-sm text-right leading-relaxed transition-all duration-700 delay-200",
+            isVisible ? "opacity-100" : "opacity-0"
+          )}>
+            Follow these simple steps to secure your child's place at Sree Nandanam Public School.
           </p>
         </div>
 
-        {/* Process Steps */}
-        <div className="relative">
-          {/* Connection Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-border hidden md:block md:-translate-x-1/2" />
+        {/* Desktop timeline layout */}
+        <div className="hidden lg:block relative py-6">
+          {/* Horizontal line */}
+          <div className="absolute top-[26px] left-[12.5%] right-[12.5%] h-[2px] bg-border z-0" />
+          
+          <div className="grid grid-cols-4 gap-8 relative z-10">
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <div
+                  key={step.step}
+                  className={cn(
+                    "group flex flex-col items-center text-center transition-all duration-700",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                  )}
+                  style={{ transitionDelay: `${(index + 2) * 100}ms` }}
+                >
+                  {/* Step dot / Icon */}
+                  <div className="w-11 h-11 rounded-full border-2 bg-background flex items-center justify-center relative z-10 border-border group-hover:border-primary group-hover:bg-primary/5 transition-all duration-300">
+                    <Icon className="w-4.5 h-4.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
 
-          <div className="space-y-8 md:space-y-0">
-            {steps.map((step, index) => (
+                  {/* Step number */}
+                  <span className="text-xs font-semibold text-muted-foreground/60 group-hover:text-primary transition-colors mt-4">
+                    Step {step.step}
+                  </span>
+
+                  {/* Title */}
+                  <h3 className="font-serif text-lg font-bold text-foreground mt-2 mb-2 group-hover:text-primary transition-colors duration-300">
+                    {step.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-xs leading-relaxed max-w-[220px]">
+                    {step.description}
+                  </p>
+
+                  {/* Details */}
+                  <ul className="mt-4 space-y-1.5 text-[11px] text-muted-foreground/80">
+                    {step.details.map((detail) => (
+                      <li key={detail} className="flex items-center gap-1.5 justify-center">
+                        <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary shrink-0 transition-colors" />
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile timeline layout */}
+        <div className="lg:hidden relative pl-6 border-l-2 border-border ml-4 space-y-10">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            return (
               <div
                 key={step.step}
                 className={cn(
-                  "relative md:flex md:items-center transition-all duration-700",
-                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse",
-                  isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4",
+                  "group relative flex flex-col items-start transition-all duration-700",
+                  isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
                 )}
-                style={{ transitionDelay: `${(index + 3) * 100}ms` }}
+                style={{ transitionDelay: `${(index + 2) * 100}ms` }}
               >
-                {/* Content */}
-                <div
-                  className={cn(
-                    "md:w-1/2 p-4",
-                    index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12",
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "bg-card rounded-2xl p-6 border border-border hover:border-primary/30 hover:shadow-lg transition-all",
-                      index % 2 === 0 ? "md:ml-auto" : "",
-                    )}
-                    style={{ maxWidth: "400px" }}
-                  >
-                    <div
-                      className={cn(
-                        "flex items-center gap-3 mb-4",
-                        index % 2 === 0 ? "md:flex-row-reverse" : "",
-                      )}
-                    >
-                      <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shrink-0">
-                        <step.icon className="w-6 h-6 text-primary-foreground" />
-                      </div>
-                      <div>
-                        <span className="text-xs font-medium text-primary">
-                          Step {step.step}
-                        </span>
-                        <h3 className="font-semibold text-foreground">
-                          {step.title}
-                        </h3>
-                      </div>
-                    </div>
-                    <p
-                      className={cn(
-                        "text-muted-foreground text-sm mb-4",
-                        index % 2 === 0 ? "md:text-right" : "",
-                      )}
-                    >
-                      {step.description}
-                    </p>
-                    <ul
-                      className={cn(
-                        "space-y-1",
-                        index % 2 === 0 ? "md:text-right" : "",
-                      )}
-                    >
-                      {step.details.map((detail) => (
-                        <li
-                          key={detail}
-                          className={cn(
-                            "text-xs text-muted-foreground flex items-center gap-2",
-                            index % 2 === 0 ? "md:flex-row-reverse" : "",
-                          )}
-                        >
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Dot / Icon */}
+                <div className="absolute -left-[45px] top-0 w-9 h-9 rounded-full border-2 bg-background flex items-center justify-center z-10 border-border group-hover:border-primary group-hover:bg-primary/5 transition-all duration-300">
+                  <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
 
-                {/* Center Dot */}
-                <div className="absolute left-8 md:left-1/2 top-6 w-4 h-4 bg-primary rounded-full -translate-x-1/2 hidden md:block z-10 ring-4 ring-background" />
+                {/* Step number */}
+                <span className="text-xs font-semibold text-primary mb-1">
+                  Step {step.step}
+                </span>
 
-                {/* Spacer for other side */}
-                <div className="hidden md:block md:w-1/2" />
+                {/* Title */}
+                <h3 className="font-serif text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">
+                  {step.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-muted-foreground text-xs leading-relaxed max-w-md mb-3">
+                  {step.description}
+                </p>
+
+                {/* Details */}
+                <ul className="space-y-1.5 text-[11px] text-muted-foreground/80">
+                  {step.details.map((detail) => (
+                    <li key={detail} className="flex items-center gap-1.5">
+                      <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary shrink-0 transition-colors" />
+                      <span>{detail}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );

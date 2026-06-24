@@ -8,6 +8,9 @@ import { UpcomingEvents } from "@/components/news/upcoming-events"
 export const metadata: Metadata = {
   title: "News & Announcements",
   description: "Stay updated with the latest news, announcements, and upcoming events at SREE NANDANAM PUBLIC SCHOOL.",
+  alternates: {
+    canonical: "/news",
+  },
 }
 
 export default function NewsPage() {

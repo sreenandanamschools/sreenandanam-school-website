@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Baby, BookOpen, GraduationCap, ArrowRight } from "lucide-react";
+import { Baby, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -21,13 +21,15 @@ const programs = [
       "Basic hygiene and care",
       "Trained and caring staff",
     ],
+    number: "01",
+    dark: true,
   },
   {
     id: "pre-primary",
     icon: Baby,
     title: "Pre-Primary Section",
     grades: "Nursery to UKG",
-    ageGroup: "Ages 3-5",
+    ageGroup: "Ages 3–5",
     description:
       "A nurturing environment where young learners begin their educational journey through play-based learning, creative activities, and foundational skill development.",
     highlights: [
@@ -37,13 +39,15 @@ const programs = [
       "Social skill development",
       "Physical activities and games",
     ],
+    number: "02",
+    dark: false,
   },
   {
     id: "primary",
     icon: BookOpen,
     title: "Primary Education",
     grades: "Class 1 to Class 7",
-    ageGroup: "Ages 6-12",
+    ageGroup: "Ages 6–12",
     description:
       "Building strong foundations in core subjects while fostering curiosity, creativity, and a love for learning through interactive teaching methods.",
     highlights: [
@@ -53,6 +57,8 @@ const programs = [
       "Art and physical education",
       "Value education",
     ],
+    number: "03",
+    dark: true,
   },
 ];
 
@@ -62,122 +68,137 @@ export function AcademicPrograms() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.05 },
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-card">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p
-            className={cn(
-              "text-primary font-medium mb-2 transition-all duration-700",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Our Programs
+    <section ref={sectionRef} className="overflow-hidden">
+
+      {/* Section intro */}
+      <div className="container mx-auto px-4 lg:px-8 py-16 md:py-20">
+        <div className="flex items-end justify-between">
+          <div>
+            <p className={cn(
+              "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-4 transition-all duration-700",
+              isVisible ? "opacity-100" : "opacity-0"
+            )}>
+              Our Programs
+            </p>
+            <h2 className={cn(
+              "font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight transition-all duration-700 delay-100",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Academic
+              <br />
+              <em>Levels</em>
+            </h2>
+          </div>
+          <p className={cn(
+            "hidden md:block text-muted-foreground max-w-xs text-right text-sm leading-relaxed transition-all duration-700 delay-200",
+            isVisible ? "opacity-100" : "opacity-0"
+          )}>
+            From early childhood to upper primary, each program is tailored to the developmental needs of every age group.
           </p>
-          <h2
-            className={cn(
-              "font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 transition-all duration-700 delay-100",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Academic Levels
-          </h2>
-          <p
-            className={cn(
-              "text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-200",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            From pre-primary to upper primary, we offer comprehensive education
-            tailored to each age group's developmental needs.
-          </p>
-        </div>
-
-        {/* Programs */}
-        <div className="space-y-8">
-          {programs.map((program, index) => (
-            <div
-              key={program.id}
-              id={program.id}
-              className={cn(
-                "group bg-background rounded-2xl border border-border overflow-hidden transition-all duration-700 hover:shadow-lg",
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4",
-              )}
-              style={{ transitionDelay: `${(index + 3) * 100}ms` }}
-            >
-              <div className="grid md:grid-cols-3 gap-6 p-6 md:p-8">
-                {/* Left - Icon and Title */}
-                <div className="md:border-r border-border md:pr-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
-                    <program.icon className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
-                  </div>
-                  <h3 className="font-serif text-2xl font-bold text-foreground mb-2">
-                    {program.title}
-                  </h3>
-                  <div className="space-y-1 mb-4">
-                    <p className="text-primary font-medium">{program.grades}</p>
-                    <p className="text-muted-foreground text-sm">
-                      {program.ageGroup}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Middle - Description */}
-                <div className="md:px-2">
-                  <h4 className="font-semibold text-foreground mb-3">
-                    Overview
-                  </h4>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {program.description}
-                  </p>
-                </div>
-
-                {/* Right - Highlights */}
-                <div>
-                  <h4 className="font-semibold text-foreground mb-3">
-                    Key Features
-                  </h4>
-                  <ul className="space-y-2">
-                    {program.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
-                      >
-                        <ArrowRight className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
+
+      {/* Alternating full-width panels */}
+      {programs.map((program, index) => (
+        <div
+          key={program.id}
+          id={program.id}
+          className={cn(
+            "grid lg:grid-cols-[1fr_1fr] min-h-[400px] transition-all duration-700",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+            program.dark ? "bg-[var(--ink)]" : "bg-[var(--cream)]",
+            index === programs.length - 1 && "border-b border-white/10"
+          )}
+          style={{ transitionDelay: `${(index + 2) * 150}ms` }}
+        >
+          {/* Number + Title panel — alternates side */}
+          <div className={cn(
+            "relative flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-16 overflow-hidden",
+            index % 2 !== 0 && "lg:order-last"
+          )}>
+            {/* Large decorative number */}
+            <span className={cn(
+              "absolute top-8 right-8 lg:right-12 font-serif font-bold leading-none select-none pointer-events-none",
+              "text-8xl md:text-9xl",
+              program.dark ? "text-white/[0.12]" : "text-black/[0.08]"
+            )}>
+              {program.number}
+            </span>
+
+            {/* Tag */}
+            <div className={cn(
+              "inline-flex items-center gap-2 mb-6",
+            )}>
+              <span className={cn(
+                "text-xs font-bold tracking-[0.2em] uppercase",
+                program.dark ? "text-[var(--gold)]" : "text-primary"
+              )}>
+                {program.grades}
+              </span>
+              <span className={cn(
+                "text-xs px-2 py-0.5 rounded-sm font-medium",
+                program.dark ? "bg-white/10 text-white/60" : "bg-black/5 text-muted-foreground"
+              )}>
+                {program.ageGroup}
+              </span>
+            </div>
+
+            <h3 className={cn(
+              "font-serif text-3xl md:text-4xl font-bold leading-tight mb-6",
+              program.dark ? "text-white" : "text-foreground"
+            )}>
+              {program.title}
+            </h3>
+
+            <p className={cn(
+              "leading-relaxed max-w-sm",
+              program.dark ? "text-white/60" : "text-muted-foreground"
+            )}>
+              {program.description}
+            </p>
+          </div>
+
+          {/* Highlights panel */}
+          <div className={cn(
+            "flex flex-col justify-center px-8 sm:px-12 lg:px-14 py-16 border-t lg:border-t-0",
+            program.dark ? "border-white/10 lg:border-l lg:border-l-white/10" : "border-border lg:border-l lg:border-l-border",
+            index % 2 !== 0 && "lg:order-first"
+          )}>
+            <p className={cn(
+              "text-xs font-bold tracking-[0.15em] uppercase mb-6",
+              program.dark ? "text-white/30" : "text-muted-foreground"
+            )}>
+              Key Features
+            </p>
+            <ul className="space-y-4">
+              {program.highlights.map((item, i) => (
+                <li key={item} className="flex items-center gap-4 group">
+                  <span className={cn(
+                    "font-serif font-bold text-lg tabular-nums shrink-0 w-6 text-right",
+                    program.dark ? "text-white/45" : "text-black/35"
+                  )}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className={cn(
+                    "font-medium",
+                    program.dark ? "text-white/80" : "text-foreground"
+                  )}>
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

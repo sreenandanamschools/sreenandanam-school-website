@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Calendar, MapPin, Users, Award, UserCircle2 } from "lucide-react";
+import { UserCircle2 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -9,32 +9,27 @@ const milestones = [
   {
     year: "2008",
     title: "School Founded",
-    description:
-      "Sree Nandanam Public School was established with a vision to provide quality English medium education in rural Parassala.",
+    description: "Established with a vision to provide quality English medium education in rural Parassala.",
   },
   {
     year: "2012",
-    title: "Pre-Primary Section Added",
-    description:
-      "Expanded our offerings to include a pre-primary section, providing early childhood education.",
+    title: "Pre-Primary Added",
+    description: "Expanded offerings to include early childhood education for pre-primary students.",
   },
   {
     year: "2015",
-    title: "Computer Lab Established",
-    description:
-      "Introduced computer-aided learning with a dedicated lab to prepare students for the digital age.",
+    title: "Computer Lab",
+    description: "Introduced digital learning with a dedicated computer-aided lab.",
   },
   {
     year: "2018",
     title: "Infrastructure Expansion",
-    description:
-      "Added new classrooms and activity rooms to accommodate growing student enrollment.",
+    description: "Added new classrooms and activity rooms to meet growing enrollment.",
   },
   {
     year: "2023",
     title: "15+ Years of Excellence",
-    description:
-      "Celebrated fifteen years of commitment to education and community service.",
+    description: "Celebrated fifteen years of commitment to education and community.",
   },
 ];
 
@@ -50,284 +45,193 @@ interface FamousVisitor {
 export function HistorySection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
   const [visitors, setVisitors] = useState<FamousVisitor[]>([]);
   const [visitorsLoading, setVisitorsLoading] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.05 },
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    async function fetchVisitors() {
-      try {
-        const res = await fetch("/api/honorary-guests");
-        const json = await res.json();
-        if (json.success) {
-          setVisitors(json.data);
-        }
-      } catch (err) {
-      } finally {
-        setVisitorsLoading(false);
-      }
-    }
-    fetchVisitors();
+    fetch("/api/honorary-guests")
+      .then(r => r.json())
+      .then(json => { if (json.success) setVisitors(json.data); })
+      .catch(() => {})
+      .finally(() => setVisitorsLoading(false));
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-card">
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left Column - About Text */}
-          <div>
-            <h2
-              className={cn(
-                "font-serif text-3xl md:text-4xl font-bold text-foreground mb-6 transition-all duration-700",
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4",
-              )}
-            >
-              Our History
-            </h2>
-            <div
-              className={cn(
-                "space-y-4 text-muted-foreground leading-relaxed transition-all duration-700 delay-100",
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4",
-              )}
-            >
-              <p>
-                Sree Nandanam Public School was established in 2008 in the rural
-                area of Parassala block in Thiruvananthapuram district, Kerala.
-                Founded with a vision to provide accessible, quality education
-                to children in the community, our school has grown to become a
-                trusted institution for Kindergarten and primary education.
-              </p>
-              <p>
-                Over the years, we have continuously improved our facilities and
-                teaching methodologies to ensure that every student receives the
-                best possible foundation for their future. Our commitment to
-                excellence in education has made us a preferred choice for
-                parents seeking quality English medium schooling.
-              </p>
-            </div>
+    <section ref={sectionRef} className="bg-[var(--ink)] overflow-hidden">
 
-            {/* Quick Facts */}
-            <div
-              className={cn(
-                "grid grid-cols-2 gap-4 mt-8 transition-all duration-700 delay-200",
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4",
-              )}
-            >
-              <div className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Est. 2008</p>
-                  <p className="text-sm text-muted-foreground">Founded</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Parassala</p>
-                  <p className="text-sm text-muted-foreground">Location</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Users className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Co-Ed</p>
-                  <p className="text-sm text-muted-foreground">School Type</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Award className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">English</p>
-                  <p className="text-sm text-muted-foreground">Medium</p>
-                </div>
-              </div>
-            </div>
+      {/* ── History intro split ──────────────────────── */}
+      <div className="grid lg:grid-cols-2 min-h-[50vh]">
+        {/* Text side */}
+        <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-14 xl:px-20 py-20">
+          <span className={cn(
+            "inline-flex items-center gap-2 mb-6 text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase transition-all duration-700",
+            isVisible ? "opacity-100" : "opacity-0"
+          )}>
+            <span className="h-px w-6 bg-[var(--gold)]" />
+            Our History
+          </span>
+          <h2 className={cn(
+            "font-serif text-4xl md:text-5xl font-bold text-white leading-tight mb-8 transition-all duration-700 delay-100",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          )}>
+            Rooted in
+            <br />
+            <em className="text-[var(--gold)]">Community</em>
+          </h2>
+          <div className={cn(
+            "space-y-4 text-white/65 leading-relaxed max-w-md transition-all duration-700 delay-200",
+            isVisible ? "opacity-100" : "opacity-0"
+          )}>
+            <p>
+              Sree Nandanam Public School was established in 2008 in the rural area of
+              Parassala block in Thiruvananthapuram district, Kerala. Founded with a vision
+              to provide accessible, quality education to children in the community, our
+              school has grown to become a trusted institution for Kindergarten and primary education.
+            </p>
+            <p>
+              Over the years, we have continuously improved our facilities and teaching
+              methodologies to ensure that every student receives the best possible foundation.
+            </p>
           </div>
+        </div>
 
-          {/* Right Column - Timeline */}
-          <div
-            className={cn(
-              "transition-all duration-700 delay-300",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
+        {/* Decorative year column */}
+        <div className={cn(
+          "hidden lg:flex items-center justify-center relative overflow-hidden border-l border-white/5 transition-all duration-1000 delay-300",
+          isVisible ? "opacity-100" : "opacity-0"
+        )}>
+          {/* Quick facts */}
+          <div className="grid grid-cols-2 gap-px bg-white/5 w-full h-full">
+            {[
+              { label: "Founded", value: "2008" },
+              { label: "Location", value: "Parassala" },
+              { label: "Type", value: "Co-Ed" },
+              { label: "Medium", value: "English" },
+            ].map(fact => (
+              <div key={fact.label} className="flex flex-col justify-center p-8 bg-[var(--ink)] hover:bg-white/5 transition-colors duration-300">
+                <span className="font-serif text-3xl font-bold text-[var(--gold)] mb-1">{fact.value}</span>
+                <span className="text-white/40 text-xs uppercase tracking-widest">{fact.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Horizontal Timeline ──────────────────────── */}
+      <div className="border-t border-white/10 px-4 lg:px-0">
+        <div className={cn(
+          "snap-x-scroll flex items-stretch transition-all duration-700 delay-400",
+          isVisible ? "opacity-100" : "opacity-0"
+        )}>
+          {milestones.map((milestone, index) => (
+            <div
+              key={milestone.year}
+              className="snap-child shrink-0 flex flex-col border-r border-white/10 last:border-r-0 p-8 lg:p-10 w-64 lg:w-auto lg:flex-1"
+            >
+              {/* Year stamp */}
+              <div className="font-serif text-4xl lg:text-5xl font-bold text-white/10 mb-4 leading-none">
+                {milestone.year}
+              </div>
+
+              {/* Dot + line */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-3 h-3 rounded-full bg-[var(--gold)] shrink-0" />
+                <div className="h-px flex-1 bg-white/15" />
+              </div>
+
+              <h3 className="font-serif text-lg font-bold text-white mb-2 leading-snug">
+                {milestone.title}
+              </h3>
+              <p className="text-white/50 text-sm leading-relaxed">
+                {milestone.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Honorary Guests horizontal strip ─────────── */}
+      {(visitorsLoading || visitors.length > 0) && (
+        <div className="border-t border-white/10 py-16 lg:py-20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <span className={cn(
+                  "inline-flex items-center gap-2 mb-4 text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase transition-all duration-700",
+                  isVisible ? "opacity-100" : "opacity-0"
+                )}>
+                  <span className="h-px w-6 bg-[var(--gold)]" />
+                  Distinguished Visitors
+                </span>
+                <h2 className={cn(
+                  "font-serif text-3xl md:text-4xl font-bold text-white leading-tight transition-all duration-700 delay-100",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}>
+                  Honorary <em className="text-[var(--gold)]">Guests</em>
+                </h2>
+              </div>
+            </div>
+
+            {/* Skeletons */}
+            {visitorsLoading && (
+              <div className="flex gap-4 overflow-x-auto pb-2 animate-pulse">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="shrink-0 w-64 h-80 bg-white/5 rounded-sm" />
+                ))}
+              </div>
             )}
-          >
-            <h3 className="font-serif text-2xl font-semibold text-foreground mb-8">
-              Our Journey
-            </h3>
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-[23px] top-0 bottom-0 w-0.5 bg-border" />
 
-              {/* Milestones */}
-              <div className="space-y-6">
-                {milestones.map((milestone, index) => (
+            {/* Horizontal scroll cards */}
+            {!visitorsLoading && visitors.length > 0 && (
+              <div className={cn(
+                "snap-x-scroll flex gap-4 pb-2 transition-all duration-700 delay-300",
+                isVisible ? "opacity-100" : "opacity-0"
+              )}>
+                {visitors.map((visitor) => (
                   <div
-                    key={milestone.year}
-                    className={cn(
-                      "relative flex gap-6 transition-all duration-500",
-                      isVisible
-                        ? "opacity-100 translate-x-0"
-                        : "opacity-0 translate-x-4",
-                    )}
-                    style={{ transitionDelay: `${(index + 4) * 100}ms` }}
+                    key={visitor.id}
+                    className="snap-child group shrink-0 w-60 md:w-64 bg-white/5 hover:bg-white/10 transition-all duration-500 rounded-sm overflow-hidden border border-white/10 hover:border-white/20"
                   >
-                    {/* Dot */}
-                    <div className="relative z-10 w-12 h-12 bg-primary rounded-full flex items-center justify-center shrink-0 text-primary-foreground font-bold text-sm">
-                      {milestone.year.slice(2)}
+                    {/* Image */}
+                    <div className="relative h-56 bg-white/5 overflow-hidden">
+                      {visitor.image_url ? (
+                        <Image
+                          src={visitor.image_url}
+                          alt={visitor.name}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="256px"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <UserCircle2 className="w-16 h-16 text-white/20" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
-
-                    {/* Content */}
-                    <div className="flex-1 pb-6">
-                      <p className="text-sm text-primary font-medium mb-1">
-                        {milestone.year}
-                      </p>
-                      <h4 className="font-semibold text-foreground mb-2">
-                        {milestone.title}
-                      </h4>
-                      <p className="text-sm text-muted-foreground">
-                        {milestone.description}
-                      </p>
+                    {/* Info */}
+                    <div className="p-5">
+                      <h3 className="font-serif text-base font-bold text-white mb-0.5 leading-snug">{visitor.name}</h3>
+                      <p className="text-[var(--gold)] text-xs font-semibold mb-2">{visitor.designation}</p>
+                      <p className="text-white/50 text-xs leading-relaxed line-clamp-3">{visitor.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
+      )}
 
-        {/* Honorary Guests Section */}
-        <div className="mt-24">
-          <div className="text-center mb-12">
-            <h2
-              className={cn(
-                "font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 transition-all duration-700",
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4",
-              )}
-            >
-              Honorary Guests
-            </h2>
-            <p
-              className={cn(
-                "text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-100",
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4",
-              )}
-            >
-              Over the years, we have been honored to host several distinguished
-              personalities who have inspired our students and staff.
-            </p>
-          </div>
-
-          {/* Loading Skeletons */}
-          {visitorsLoading && (
-            <div className="grid md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="bg-background rounded-2xl overflow-hidden border border-border animate-pulse"
-                >
-                  <div className="aspect-4/3 bg-muted" />
-                  <div className="p-6 space-y-3">
-                    <div className="h-5 bg-muted rounded w-3/4" />
-                    <div className="h-4 bg-muted rounded w-1/2" />
-                    <div className="h-3 bg-muted rounded w-full" />
-                    <div className="h-3 bg-muted rounded w-5/6" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Visitor Cards */}
-          {!visitorsLoading && visitors.length > 0 && (
-            <div className="grid md:grid-cols-3 gap-8">
-              {visitors.map((visitor, index) => (
-                <div
-                  key={visitor.id}
-                  className={cn(
-                    "bg-background rounded-2xl overflow-hidden border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-500 group",
-                    isVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4",
-                  )}
-                  style={{ transitionDelay: `${(index + 2) * 100}ms` }}
-                >
-                  <div className="aspect-4/3 bg-muted relative overflow-hidden">
-                    {visitor.image_url ? (
-                      <Image
-                        src={visitor.image_url}
-                        alt={visitor.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <UserCircle2 className="w-16 h-16 text-muted-foreground/30" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-serif text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
-                      {visitor.name}
-                    </h3>
-                    <p className="text-sm text-primary font-medium mb-3">
-                      {visitor.designation}
-                    </p>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {visitor.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Empty State */}
-          {!visitorsLoading && visitors.length === 0 && (
-            <div className="text-center py-16 text-muted-foreground">
-              <UserCircle2 className="w-12 h-12 mx-auto mb-4 opacity-30" />
-              <p className="text-sm">No records found.</p>
-            </div>
-          )}
-        </div>
-      </div>
     </section>
   );
 }

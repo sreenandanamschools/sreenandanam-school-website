@@ -29,10 +29,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://sreenandanamschools.com'),
-  alternates: {
-    canonical: '/',
-  },
+  metadataBase: new URL("https://sreenandanamschools.com"),
   icons: {
     icon: [
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },

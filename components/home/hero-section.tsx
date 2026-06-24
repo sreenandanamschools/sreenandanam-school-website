@@ -2,201 +2,178 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+const heroImages = [
+  "/images/hero-school.jpg",
+  "/images/playground.jpg",
+  "/images/assembly.jpg",
+  "/images/cultural.jpg",
+];
 
-  const heroImages = [
-    "/images/hero-school.jpg",
-    "/images/playground.jpg",
-    "/images/assembly.jpg",
-    "/images/cultural.jpg",
-  ];
+export function HeroSection() {
+  const [mounted, setMounted] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    setMounted(true);
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [currentImageIndex, heroImages.length]);
+  }, []);
 
-  const handlePrev = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
-  };
-
-  const handleNext = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+  const navigate = (dir: 1 | -1) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => (prev + dir + heroImages.length) % heroImages.length);
+    setTimeout(() => setIsAnimating(false), 700);
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image Carousel */}
-      {heroImages.map((src, index) => (
-        <div
-          key={src}
-          className={cn(
-            "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000",
-            currentImageIndex === index ? "opacity-100" : "opacity-0"
-          )}
-          style={{ backgroundImage: `url(${src})` }}
+    <section className="relative min-h-screen overflow-hidden bg-[var(--ink)] flex flex-col lg:flex-row">
+
+      {/* ── Left editorial panel ──────────────────────── */}
+      <div className="relative z-10 flex flex-col justify-end lg:justify-center px-6 sm:px-10 lg:px-16 xl:px-20 pt-36 lg:pt-24 pb-12 lg:pb-16 w-full lg:w-[52%] shrink-0">
+
+        {/* Year badge */}
+        <div className={cn(
+          "inline-flex items-center gap-2 mb-8 transition-all duration-700 delay-100",
+          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        )}>
+          <span className="h-px w-8 bg-[var(--gold)]" />
+          <span className="text-[var(--gold)] text-xs font-bold tracking-[0.25em] uppercase">Est. 2008 · Parassala, Kerala</span>
+        </div>
+
+        {/* Main heading — left-anchored, not centered */}
+        <h1 className={cn(
+          "font-serif font-bold text-white leading-[1.05] text-balance mb-6 transition-all duration-700 delay-200",
+          "text-4xl sm:text-5xl md:text-6xl xl:text-7xl",
+          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          Nurturing{" "}
+          <span className="italic text-[var(--gold)]">Young Minds,</span>
+          <br />
+          Building{" "}
+          <span className="italic">Bright Futures</span>
+        </h1>
+
+        {/* Sub copy */}
+        <p className={cn(
+          "text-white/65 leading-relaxed max-w-md mb-10 transition-all duration-700 delay-300",
+          "text-base md:text-lg",
+          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        )}>
+          Quality English medium education from Class 1 to Class 7,
+          fostering creativity, critical thinking, and holistic
+          development in the heart of Parassala.
+        </p>
+
+        {/* CTAs */}
+        <div className={cn(
+          "flex flex-wrap items-center gap-4 mb-16 transition-all duration-700 delay-400",
+          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        )}>
+          <Link
+            href="/contact#contact-form"
+            className="inline-flex items-center gap-2.5 bg-[var(--gold)] text-[var(--gold-foreground)] px-7 py-3.5 text-sm font-bold rounded-sm hover:bg-[var(--gold)]/90 transition-all duration-300 hover:gap-4 group"
+          >
+            Apply for Admission
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 text-white/80 text-sm font-semibold hover:text-white transition-colors link-underline"
+          >
+            Discover Our School
+          </Link>
+        </div>
+
+        {/* Stats strip */}
+        <div className={cn(
+          "flex items-center gap-8 transition-all duration-700 delay-500",
+          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        )}>
+          {[
+            { value: "18+", label: "Years of Excellence" },
+            { value: "7", label: "Grade Levels" },
+            { value: "100%", label: "English Medium" },
+          ].map((stat, i) => (
+            <div key={i} className="flex flex-col">
+              <span className="font-serif text-2xl font-bold text-[var(--gold)]">{stat.value}</span>
+              <span className="text-white/50 text-xs mt-0.5">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Right image panel ─────────────────────────── */}
+      <div className="relative flex-1 min-h-[40vh] lg:min-h-full">
+
+        {/* Diagonal clip edge (desktop only) */}
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-16 z-10"
+          style={{
+            background: "linear-gradient(to right, var(--ink), transparent)"
+          }}
         />
-      ))}
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={handlePrev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center backdrop-blur-sm transition-all duration-300 border border-white/10 hover:scale-105 active:scale-95"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center backdrop-blur-sm transition-all duration-300 border border-white/10 hover:scale-105 active:scale-95"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
-
-      {/* Pagination Indicator Dots */}
-      <div className="absolute bottom-8 right-4 md:right-12 z-20 flex gap-2">
-        {heroImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
+        {/* Images */}
+        {heroImages.map((src, i) => (
+          <div
+            key={src}
             className={cn(
-              "h-2 rounded-full transition-all duration-300",
-              currentImageIndex === index
-                ? "bg-primary w-6"
-                : "bg-white/40 hover:bg-white/60 w-2"
+              "absolute inset-0 bg-cover bg-center transition-opacity duration-1000",
+              currentIndex === i ? "opacity-100" : "opacity-0"
             )}
-            aria-label={`Go to slide ${index + 1}`}
+            style={{ backgroundImage: `url(${src})` }}
           />
         ))}
-      </div>
 
-      {/* Dark Overlay for rich text readability */}
-      <div className="absolute inset-0 bg-black/60" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/40" />
 
-      <div className="container mx-auto px-4 pt-20 pb-12 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div
-            className={cn(
-              "inline-flex items-center gap-2 px-4 py-2 bg-white/15 text-white backdrop-blur-sm rounded-full text-sm font-medium mb-8 border border-white/20 transition-all duration-700",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            Admissions Open for 2026-27
-          </div>
-
-          {/* Main Heading */}
-          <h1
-            className={cn(
-              "font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 transition-all duration-700 delay-100 text-balance",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Nurturing Young Minds,{" "}
-            <span className="text-primary-foreground">Building Bright Futures</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p
-            className={cn(
-              "text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10 leading-relaxed transition-all duration-700 delay-200 text-pretty",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Sree Nandanam Public School provides quality English medium
-            education for students from Class 1 to Class 7, fostering
-            creativity, critical thinking, and holistic development since 2008.
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            className={cn(
-              "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 delay-300",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            <Button asChild size="lg" className="text-base px-8">
-              <Link href="/admissions">
-                Apply for Admission
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="text-base px-8"
-            >
-              <Link href="/about">
-                <Play className="mr-2 w-4 h-4" />
-                Discover Our School
-              </Link>
-            </Button>
-          </div>
-
-          {/* Trust Indicators */}
-          <div
-            className={cn(
-              "mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-700 delay-400",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            <div className="text-center">
-              <p className="font-serif text-3xl md:text-4xl font-bold text-primary-foreground">
-                18+
-              </p>
-              <p className="text-sm text-white/80">
-                Years of Excellence
-              </p>
-            </div>
-            <div className="w-px h-12 bg-white/20 hidden md:block" />
-            <div className="text-center">
-              <p className="font-serif text-3xl md:text-4xl font-bold text-primary-foreground">
-                7
-              </p>
-              <p className="text-sm text-white/80">Grade Levels</p>
-            </div>
-            <div className="w-px h-12 bg-white/20 hidden md:block" />
-            <div className="text-center">
-              <p className="font-serif text-3xl md:text-4xl font-bold text-primary-foreground">
-                100%
-              </p>
-              <p className="text-sm text-white/80">English Medium</p>
-            </div>
+        {/* Slide counter */}
+        <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">
+          <span className="font-serif text-white/50 text-xs">
+            {String(currentIndex + 1).padStart(2, "0")} / {String(heroImages.length).padStart(2, "0")}
+          </span>
+          <div className="flex gap-1.5">
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={cn(
+                  "h-0.5 rounded-full transition-all duration-400",
+                  currentIndex === i ? "w-8 bg-[var(--gold)]" : "w-3 bg-white/30 hover:bg-white/50"
+                )}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
           </div>
         </div>
+
+        {/* Nav arrows */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute right-16 bottom-3 z-20 w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/25 transition-all duration-300 hover:scale-110 active:scale-95"
+          aria-label="Previous"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <button
+          onClick={() => navigate(1)}
+          className="absolute right-4 bottom-3 z-20 w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/25 transition-all duration-300 hover:scale-110 active:scale-95"
+          aria-label="Next"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-          <div className="w-1.5 h-3 bg-white/50 rounded-full animate-pulse" />
-        </div>
-      </div>
     </section>
   );
 }

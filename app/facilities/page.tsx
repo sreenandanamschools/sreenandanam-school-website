@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Facilities",
   description:
     "Explore our modern facilities including computer lab, library, playground, and well-equipped classrooms designed for effective learning.",
+  alternates: {
+    canonical: "/facilities",
+  },
 };
 
 export default function FacilitiesPage() {

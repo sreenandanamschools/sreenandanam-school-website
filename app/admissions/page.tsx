@@ -9,6 +9,9 @@ import { AdmissionCTA } from "@/components/admissions/admission-cta"
 export const metadata: Metadata = {
   title: "Admissions",
   description: "Apply for admission to SREE NANDANAM PUBLIC SCHOOL. Learn about eligibility criteria, required documents, and the admission process for Class 1 to Class 7.",
+  alternates: {
+    canonical: "/admissions",
+  },
 }
 
 export default function AdmissionsPage() {

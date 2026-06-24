@@ -2,8 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Phone, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Phone, Mail, MapPin, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function CTASection() {
@@ -12,128 +11,146 @@ export function CTASection() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
       { threshold: 0.1 },
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-16 md:py-24 bg-primary relative overflow-hidden"
-    >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-background rounded-full -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-background rounded-full translate-x-1/3 translate-y-1/3" />
-      </div>
+    <section ref={sectionRef} className="relative overflow-hidden">
+      <div className="grid lg:grid-cols-[55fr_45fr] min-h-[500px]">
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          {/* Heading */}
-          <h2
-            className={cn(
-              "font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 transition-all duration-700",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Give Your Child the Gift of Quality Education
-          </h2>
+        {/* ── Left — green CTA panel ─────────────────── */}
+        <div className="relative bg-primary flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-16 lg:py-24 overflow-hidden">
 
-          {/* Description */}
-          <p
-            className={cn(
-              "text-primary-foreground/80 text-lg mb-8 transition-all duration-700 delay-100",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            Join the Sree Nandanam family and let us help your child discover
-            their potential. Admissions are now open for the 2026-27 academic
-            year.
-          </p>
+          {/* Decorative founding year watermark */}
+          <span className="absolute right-0 bottom-0 font-serif font-bold text-white/5 leading-none select-none translate-x-8 translate-y-4"
+            style={{ fontSize: "clamp(5rem, 15vw, 12rem)" }}>
+            2008
+          </span>
 
-          {/* CTA Buttons */}
-          <div
-            className={cn(
-              "flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 transition-all duration-700 delay-200",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            <Button
-              asChild
-              size="lg"
-              variant="secondary"
-              className="text-base px-8 bg-background text-primary hover:bg-background/90"
-            >
-              <Link href="/admissions">
+          {/* Diagonal stripe overlay */}
+          <div className="absolute inset-0 opacity-5"
+            style={{
+              backgroundImage: "repeating-linear-gradient(45deg, white, white 1px, transparent 1px, transparent 16px)"
+            }}
+          />
+
+          <div className="relative z-10">
+            <span className={cn(
+              "inline-block text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-6 transition-all duration-700",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Admissions Open · 2026–27
+            </span>
+
+            <h2 className={cn(
+              "font-serif font-bold text-white leading-tight mb-6 text-balance transition-all duration-700 delay-100",
+              "text-3xl sm:text-4xl xl:text-5xl",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Give Your Child the Gift of
+              <br />
+              <em className="text-[var(--gold)]">Quality Education</em>
+            </h2>
+
+            <p className={cn(
+              "text-white/70 leading-relaxed mb-10 max-w-md transition-all duration-700 delay-200",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              Join the Sreenandanam family. We nurture young minds with
+              modern teaching, strong values, and wholehearted care.
+            </p>
+
+            <div className={cn(
+              "flex flex-wrap gap-3 transition-all duration-700 delay-300",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}>
+              <Link
+                href="/contact#contact-form"
+                className="inline-flex items-center gap-2.5 bg-white text-primary px-7 py-3.5 text-sm font-bold rounded-sm hover:bg-white/90 transition-all duration-300 hover:gap-4 group"
+              >
                 Apply for Admission
-                <ArrowRight className="ml-2 w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="text-base px-8 border-primary-foreground/30 text-primary-foreground bg-primary-foreground/10"
-            >
-              <Link href="/contact">Schedule a Visit</Link>
-            </Button>
-          </div>
-
-          {/* Contact Info */}
-          <div
-            className={cn(
-              "flex flex-col sm:flex-row items-center justify-center gap-6 transition-all duration-700 delay-300",
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-          >
-            <Phone className="w-5 h-5 text-white" />
-            <div className="flex flex-col">
-              <a
-                href="tel:+919745433356"
-                className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white/80 border border-white/20 rounded-sm hover:border-white/40 hover:text-white transition-all duration-300"
               >
-
-                <span>+91 9745433356</span>
-              </a>
-              <a
-                href="tel:+919745433356"
-                className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-              >
-
-                <span>+91 9745433357</span>
-              </a>
+                Schedule a Visit
+              </Link>
             </div>
-
-
-            <div className="w-px h-5 bg-primary-foreground/30 hidden sm:block" />
-            <a
-              href="mailto:sreenandadnamschools@gmail.com"
-              className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-              <span>sreenandandamschools@gmail.com</span>
-            </a>
           </div>
         </div>
+
+        {/* ── Right — contact info panel ─────────────── */}
+        <div className="bg-cream flex flex-col justify-center px-8 sm:px-12 lg:px-14 py-16 lg:py-24 border-t lg:border-t-0 border-border">
+
+          <p className={cn(
+            "text-[var(--gold-foreground)] text-xs font-bold tracking-[0.2em] uppercase mb-8 transition-all duration-700 delay-200",
+            isVisible ? "opacity-100" : "opacity-0"
+          )}>
+            Get in Touch
+          </p>
+
+          <div className={cn(
+            "space-y-7 transition-all duration-700 delay-300",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}>
+
+            <div className="flex items-start gap-4 group">
+              <div className="w-10 h-10 rounded-sm bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                <Phone className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">Phone</p>
+                <a href="tel:+919745433356" className="block text-foreground font-medium text-sm hover:text-primary transition-colors">+91 97454 33356</a>
+                <a href="tel:+919745433357" className="block text-foreground font-medium text-sm hover:text-primary transition-colors">+91 97454 33357</a>
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            <div className="flex items-start gap-4 group">
+              <div className="w-10 h-10 rounded-sm bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                <Mail className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">Email</p>
+                <a href="mailto:sreenandadnamschools@gmail.com" className="text-foreground font-medium text-sm hover:text-primary transition-colors break-all">
+                  sreenandadnamschools@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            <div className="flex items-start gap-4 group">
+              <div className="w-10 h-10 rounded-sm bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                <MapPin className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">Location</p>
+                <p className="text-foreground font-medium text-sm">Parassala, Thiruvananthapuram,<br />Kerala, India</p>
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-sm bg-primary/10 flex items-center justify-center shrink-0">
+                <Clock className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">Hours</p>
+                <p className="text-foreground font-medium text-sm">Mon – Sat: 8:00 AM – 4:00 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

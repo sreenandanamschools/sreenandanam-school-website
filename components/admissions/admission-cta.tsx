@@ -190,7 +190,7 @@ export function AdmissionCTA() {
               )}
             >
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link href="/contact">Contact Us</Link>
+                <Link href="/contact#contact-form">Contact Us</Link>
               </Button>
               <Button
                 asChild
