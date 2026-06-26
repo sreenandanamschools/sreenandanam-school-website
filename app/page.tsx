@@ -7,6 +7,7 @@ import { HighlightsSection } from "@/components/home/highlights-section"
 import { AnnouncementsSection } from "@/components/home/announcements-section"
 import { GalleryPreview } from "@/components/home/gallery-preview"
 import { CTASection } from "@/components/home/cta-section"
+import { EventPromoPopup } from "@/components/home/event-promo-popup"
 
 export const metadata: Metadata = {
   title: 'SREE NANDANAM PUBLIC SCHOOL | Quality Education in Parassala',
@@ -28,6 +29,7 @@ export default function HomePage() {
   return (
     <>
       <Navigation />
+      <EventPromoPopup />
       <main>
         <HeroSection />
         <StatsSection />

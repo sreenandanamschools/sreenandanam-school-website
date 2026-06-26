@@ -3,31 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { Calendar, Clock, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-interface Event {
-  id: string
-  title: string
-  event_date: string
-  event_time: string
-  location: string
-  description: string
-}
-
-function formatTime(timeStr: string) {
-  const [h, m] = timeStr.split(":").map(Number)
-  const ampm = h >= 12 ? "PM" : "AM"
-  const hour = h % 12 || 12
-  return `${hour}:${String(m).padStart(2, "0")} ${ampm}`
-}
-
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString("en-IN", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
+import { Event, getEventImage, formatTime, formatDate } from "@/lib/events"
 
 export function EventsList() {
   const [isVisible, setIsVisible] = useState(false)
@@ -52,6 +28,7 @@ export function EventsList() {
         const json = await res.json()
         if (json.success) setEvents(json.data)
       } catch (err) {
+        console.error("Failed to fetch events:", err)
       } finally {
         setLoading(false)
       }
@@ -79,19 +56,18 @@ export function EventsList() {
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="bg-background rounded-xl border border-border p-6 animate-pulse"
+              className="bg-background rounded-xl border border-border overflow-hidden animate-pulse flex flex-col"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-muted rounded-lg shrink-0" />
-                <div className="flex-1 space-y-2">
-                  <div className="h-5 bg-muted rounded w-3/4" />
+              <div className="aspect-video w-full bg-muted" />
+              <div className="p-6 flex-1 space-y-4">
+                <div className="h-6 bg-muted rounded w-3/4" />
+                <div className="space-y-2">
                   <div className="h-4 bg-muted rounded w-1/2" />
                   <div className="h-4 bg-muted rounded w-2/3" />
                 </div>
-              </div>
-              <div className="mt-4 space-y-2">
-                <div className="h-3 bg-muted rounded w-full" />
-                <div className="h-3 bg-muted rounded w-5/6" />
+                <div className="pt-4 border-t border-border mt-auto">
+                  <div className="h-3 bg-muted rounded w-1/3" />
+                </div>
               </div>
             </div>
           ))}
@@ -111,50 +87,59 @@ export function EventsList() {
               <article
                 key={event.id}
                 className={cn(
-                  "group bg-background rounded-xl border border-border p-6 hover:border-primary/30 hover:shadow-lg transition-all duration-500",
+                  "group bg-background rounded-xl border border-border overflow-hidden hover:border-primary/30 hover:shadow-lg transition-all duration-500 flex flex-col justify-between",
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start gap-4">
-                  {/* Date Badge */}
-                  <div className="w-16 h-16 bg-primary/10 rounded-lg flex flex-col items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
-                    <span className="text-xl font-bold text-primary group-hover:text-primary-foreground">
-                      {day}
-                    </span>
-                    <span className="text-xs text-primary/80 group-hover:text-primary-foreground/80 uppercase">
-                      {month} {year}
-                    </span>
+                <div>
+                  {/* Event Image Banner with floating date badge */}
+                  <div className="relative aspect-video w-full overflow-hidden bg-muted shrink-0">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${getEventImage(event)})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    
+                    {/* Date Badge overlay */}
+                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1.5 rounded-lg flex flex-col items-center shadow-md border border-primary/10">
+                      <span className="text-lg font-bold font-serif leading-none">{day}</span>
+                      <span className="text-[9px] uppercase font-bold tracking-wider mt-0.5">{month}</span>
+                    </div>
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                  {/* Card Content */}
+                  <div className="p-6">
+                    <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-primary transition-colors mb-3 leading-snug">
                       {event.title}
                     </h3>
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" />
+                    
+                    <div className="flex flex-col gap-2 text-sm text-muted-foreground mb-4">
+                      <span className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-primary shrink-0" />
                         {formatTime(event.event_time)}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5" />
+                      <span className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-primary shrink-0" />
                         {event.location}
                       </span>
                     </div>
+
+                    {event.description && (
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                        {event.description}
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                {event.description && (
-                  <p className="text-sm text-muted-foreground mt-4 line-clamp-2">
-                    {event.description}
-                  </p>
-                )}
-
-                <div className="mt-4 pt-3 border-t border-border">
-                  <p className="text-xs text-muted-foreground">
-                    <Calendar className="w-3 h-3 inline mr-1" />
-                    {formatDate(event.event_date)}
-                  </p>
+                <div className="p-6 pt-0 mt-auto">
+                  <div className="pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-primary" />
+                      {formatDate(event.event_date)}
+                    </span>
+                  </div>
                 </div>
               </article>
             )
@@ -173,3 +158,4 @@ export function EventsList() {
     </div>
   )
 }
+

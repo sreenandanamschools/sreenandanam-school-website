@@ -94,7 +94,7 @@ export function MentalHealthSection() {
               <div className="bg-card rounded-xl border border-border overflow-hidden shadow-md">
                 <div className="aspect-square bg-muted relative overflow-hidden">
                   <img
-                    src="https://scontent.ftrv3-1.fna.fbcdn.net/v/t39.30808-6/310930077_480203270789521_15624560554593539_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WWTNJWRwbsIQ7kNvwEkzYko&_nc_oc=AdpQ6tvW9P1BUD6aSV4j41LAghNlSfRWO1M6snn4jHO3WkfHD-blPDgq_OCr3u8K1HQ&_nc_zt=23&_nc_ht=scontent.ftrv3-1.fna&_nc_gid=ZnP_Rkl0hnArsWLnGcbGAg&_nc_ss=7b289&oh=00_Af9v-Zyupc85CmjbQyrGljYIL_Zn0m48K1pcr2PiyzT4eA&oe=6A232D28"
+                    src="health/vanidevi.jpeg"
                     alt="Dr. Vanidevi P T"
                     className="w-full h-full object-cover object-top"
                   />
@@ -129,7 +129,7 @@ export function MentalHealthSection() {
               <div className="bg-card rounded-xl border border-border overflow-hidden shadow-md">
                 <div className="aspect-square bg-muted relative overflow-hidden">
                   <img
-                    src="https://scontent.ftrv3-1.fna.fbcdn.net/v/t39.30808-1/705276992_3239844396404443_6051730992708745274_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=108&ccb=1-7&_nc_sid=1d2534&_nc_ohc=GNMoD1YsGREQ7kNvwFUXQJ7&_nc_oc=AdrriDnu_skNobUUmzgr4VnVgnLqici4m2yiVqUz1CYXHVY9zRu2vt2QXhN-LkHoZmc&_nc_zt=24&_nc_ht=scontent.ftrv3-1.fna&_nc_gid=cxuSl6e4X3G7uPWh028UGw&_nc_ss=7b289&oh=00_Af9d9ERF8zhe0vH9XtuzhRc9C_0kPh1jjQRDzxFrsf7hrA&oe=6A231851"
+                    src=" /health/siddeek.jpeg"
                     alt="Siddeek Abdul Khader"
                     className="w-full h-full object-cover object-top"
                   />

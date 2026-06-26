@@ -16,7 +16,7 @@ export async function GET() {
     const supabase = createClient(sbUrl, sbKey)
 
     const { data, error } = await supabase
-      .from("famous_visitors")
+      .from("honorary-guests")
       .select("*")
       .order("visited_at", { ascending: false })
 

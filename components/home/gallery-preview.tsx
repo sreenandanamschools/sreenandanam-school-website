@@ -51,14 +51,14 @@ export function GalleryPreview() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-28 bg-[var(--ink)] overflow-hidden">
+    <section ref={sectionRef} className="py-20 md:py-28 bg-ink overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
 
         {/* Header */}
         <div className="flex items-end justify-between mb-10">
           <div>
             <p className={cn(
-              "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-3 transition-all duration-700",
+              "text-gold text-xs font-bold tracking-[0.2em] uppercase mb-3 transition-all duration-700",
               isVisible ? "opacity-100" : "opacity-0"
             )}>
               Life at Sreenandanam
@@ -69,7 +69,7 @@ export function GalleryPreview() {
             )}>
               Our
               <br />
-              <em className="text-[var(--gold)]">Gallery</em>
+              <em className="text-gold">Gallery</em>
             </h2>
           </div>
           <Link
@@ -88,7 +88,7 @@ export function GalleryPreview() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-pulse">
             {[0, 1, 2, 3, 4, 5].map(i => (
               <div key={i} className={cn(
-                "bg-white/5 rounded-sm aspect-[4/3] md:aspect-auto md:h-64",
+                "bg-white/5 rounded-sm aspect-4/3 md:aspect-auto md:h-64",
                 i === 0 ? "col-span-2 row-span-2" : ""
               )} />
             ))}
@@ -108,7 +108,7 @@ export function GalleryPreview() {
                 key={image.id}
                 href="/gallery"
                 className={cn(
-                  "group relative overflow-hidden rounded-sm bg-white/5 aspect-[4/3] lg:aspect-auto lg:h-full min-h-[200px] lg:min-h-0",
+                  "group relative overflow-hidden rounded-sm bg-white/5 aspect-4/3 lg:aspect-auto lg:h-full min-h-[200px] lg:min-h-0",
                   areaClasses[index]
                 )}
               >
@@ -120,7 +120,7 @@ export function GalleryPreview() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                 {/* Category badge */}
                 <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded-sm text-[10px] font-bold text-white/80 uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300">

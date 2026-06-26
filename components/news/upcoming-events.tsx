@@ -3,22 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { Calendar, Clock, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-interface Event {
-  id: string
-  title: string
-  event_date: string   // ISO date string e.g. "2026-03-30"
-  event_time: string   // e.g. "09:00:00"
-  location: string
-  description: string
-}
-
-function formatTime(timeStr: string) {
-  const [h, m] = timeStr.split(":").map(Number)
-  const ampm = h >= 12 ? "PM" : "AM"
-  const hour = h % 12 || 12
-  return `${hour}:${String(m).padStart(2, "0")} ${ampm}`
-}
+import { Event, getEventImage, formatTime } from "@/lib/events"
 
 export function UpcomingEvents() {
   const [isVisible, setIsVisible] = useState(false)
@@ -43,6 +28,7 @@ export function UpcomingEvents() {
         const json = await res.json()
         if (json.success) setEvents(json.data)
       } catch (err) {
+        console.error("Failed to fetch upcoming events:", err)
       } finally {
         setLoading(false)
       }
@@ -101,14 +87,21 @@ export function UpcomingEvents() {
                   style={{ transitionDelay: `${(index + 1) * 100}ms` }}
                 >
                   <div className="flex items-start gap-4">
-                    {/* Date Badge */}
-                    <div className="w-14 h-14 bg-primary/10 rounded-lg flex flex-col items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
-                      <span className="text-lg font-bold text-primary group-hover:text-primary-foreground">
-                        {day}
-                      </span>
-                      <span className="text-xs text-primary/80 group-hover:text-primary-foreground/80 uppercase">
-                        {month}
-                      </span>
+                    {/* Date Badge with Background Event Image */}
+                    <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 border border-border/60 shadow-sm">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style={{ backgroundImage: `url(${getEventImage(event)})` }}
+                      />
+                      <div className="absolute inset-0 bg-black/45 group-hover:bg-primary/75 transition-colors duration-300" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10">
+                        <span className="text-base font-bold leading-none">
+                          {day}
+                        </span>
+                        <span className="text-[10px] uppercase font-bold tracking-wider mt-0.5">
+                          {month}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="flex-1 min-w-0">
@@ -125,9 +118,11 @@ export function UpcomingEvents() {
                           {event.location}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-2 line-clamp-1">
-                        {event.description}
-                      </p>
+                      {event.description && (
+                        <p className="text-xs text-muted-foreground mt-2 line-clamp-1">
+                          {event.description}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -183,3 +178,4 @@ export function UpcomingEvents() {
     </div>
   )
 }
+
