@@ -85,7 +85,7 @@ export function CurriculumOverview() {
             )}>
               <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Academic Year</p>
               <p className="text-sm text-foreground">
-                Starts in <strong>April</strong> each year. Mon–Sat with regular assessments.
+                Starts in <strong>April</strong> each year. Mon–Fri with regular assessments.
               </p>
             </div>
           </div>
