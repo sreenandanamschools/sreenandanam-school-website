@@ -13,7 +13,7 @@ const contactDetails = [
   {
     icon: Mail,
     title: "Email",
-    details: ["info@sreenandanamschools.com", "admissions@sreenandanamschools.com"],
+    details: ["sreenandadnamschools@gmail.com"],
     description: "We respond within 24 hours"
   },
   {

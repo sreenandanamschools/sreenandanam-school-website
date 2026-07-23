@@ -15,7 +15,7 @@ export function AboutHero() {
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(/images/assembly.jpg)" }}
+        style={{ backgroundImage: "url(https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834609/IMG_4739_czppyi.jpg)" }}
       />
       {/* Left gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />

@@ -152,7 +152,7 @@ export function AdmissionCTA() {
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Email</h4>
                   <p className="text-sm text-muted-foreground">
-                    info@sreenandanamschools.com
+                    sreenandadnamschools@gmail.com
                   </p>
                 </div>
               </div>

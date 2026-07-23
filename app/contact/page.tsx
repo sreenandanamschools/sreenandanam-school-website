@@ -1,18 +1,19 @@
-import { Metadata } from "next"
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import { PageHero } from "@/components/shared/page-hero"
-import { ContactInfo } from "@/components/contact/contact-info"
-import { ContactForm } from "@/components/contact/contact-form"
-import { LocationMap } from "@/components/contact/location-map"
+import { Metadata } from "next";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { PageHero } from "@/components/shared/page-hero";
+import { ContactInfo } from "@/components/contact/contact-info";
+import { ContactForm } from "@/components/contact/contact-form";
+import { LocationMap } from "@/components/contact/location-map";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with SREE NANDANAM PUBLIC SCHOOL in Parassala, Kerala. Find our phone numbers, email address, school location map, and contact form.",
+  description:
+    "Get in touch with SREE NANDANAM PUBLIC SCHOOL in Parassala, Kerala. Find our phone numbers, email address, school location map, and contact form.",
   alternates: {
     canonical: "/contact",
   },
-}
+};
 
 export default function ContactPage() {
   return (
@@ -23,7 +24,7 @@ export default function ContactPage() {
           breadcrumb="Home / Contact Us"
           title="Contact Us"
           description="We'd love to hear from you. Get in touch with us for admissions, inquiries, or feedback."
-          image="/images/sports.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834655/IMG_5553_hgls4k.jpg"
         />
         <ContactInfo />
         <ContactForm />
@@ -31,5 +32,5 @@ export default function ContactPage() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

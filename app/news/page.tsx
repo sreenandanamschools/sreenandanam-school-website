@@ -22,7 +22,7 @@ export default function NewsPage() {
           breadcrumb="Home / News"
           title="News & Announcements"
           description="Stay informed about the latest happenings, important announcements, and upcoming events at our school."
-          image="/images/cultural.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834607/IMG_4737_njdz6h.jpg"
         />
         <div className="py-16 md:py-24 bg-card">
           <div className="container mx-auto px-4">

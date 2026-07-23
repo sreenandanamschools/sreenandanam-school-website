@@ -10,7 +10,7 @@ interface PageHeroProps {
   image?: string
 }
 
-export function PageHero({ breadcrumb, title, description, image = "/images/hero-school.jpg" }: PageHeroProps) {
+export function PageHero({ breadcrumb, title, description, image = "https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834655/IMG_5553_hgls4k.jpg" }: PageHeroProps) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

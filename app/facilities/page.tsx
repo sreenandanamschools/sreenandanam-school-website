@@ -22,7 +22,7 @@ export default function FacilitiesPage() {
           breadcrumb="Home / Facilities"
           title="Our Facilities"
           description="Modern infrastructure and learning resources designed to provide students with a comfortable and effective educational environment."
-          image="/images/computer-lab.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834609/IMG_4739_czppyi.jpg"
         />
         <FacilitiesGrid />
       </main>

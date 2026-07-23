@@ -20,7 +20,7 @@ export default function TermsOfServicePage() {
           breadcrumb="Home / Terms of Service"
           title="Terms of Service"
           description="Last updated: May 2026"
-          image="/images/hero-school.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834609/IMG_4739_czppyi.jpg"
         />
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 max-w-4xl prose prose-slate md:prose-lg">
@@ -97,7 +97,7 @@ export default function TermsOfServicePage() {
               If you have any queries regarding any of our terms, please contact
               us at:
               <br />
-              <strong>Email:</strong> info@sreenandanamschools.com
+              <strong>Email:</strong> sreenandadnamschools@gmail.com
               <br />
               <strong>Phone:</strong> +91 XXXXX XXXXX
             </p>

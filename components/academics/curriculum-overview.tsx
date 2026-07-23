@@ -7,25 +7,25 @@ const subjectGroups = [
   {
     category: "Languages",
     items: ["English", "Hindi", "Malayalam"],
-    bg: "bg-primary text-primary-foreground",
-    itemStyle: "border-primary-foreground/20 text-primary-foreground/90",
+    bg: "bg-card text-card-foreground border border-border",
+    itemStyle: "border-border text-muted-foreground",
   },
   {
     category: "Core Subjects",
     items: ["Mathematics", "Science", "Social Studies"],
-    bg: "bg-[var(--gold)] text-[var(--gold-foreground)]",
-    itemStyle: "border-[var(--gold-foreground)]/20 text-[var(--gold-foreground)]/90",
+    bg: "bg-card text-card-foreground border border-border",
+    itemStyle: "border-border text-muted-foreground",
   },
   {
     category: "Co-Curricular",
     items: ["Computer Science", "Art & Craft", "Physical Education"],
-    bg: "bg-foreground text-background",
-    itemStyle: "border-background/20 text-background/80",
+    bg: "bg-card text-card-foreground border border-border",
+    itemStyle: "border-border text-muted-foreground",
   },
   {
     category: "Value Education",
     items: ["Moral Science", "Environmental Studies", "Life Skills"],
-    bg: "bg-secondary text-foreground",
+    bg: "bg-card text-card-foreground border border-border",
     itemStyle: "border-border text-muted-foreground",
   },
 ]

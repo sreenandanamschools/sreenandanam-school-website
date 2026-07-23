@@ -21,7 +21,7 @@ export default function EventsPage() {
           breadcrumb="Home / Events"
           title="School Events"
           description="Stay up to date with all our school events, celebrations, and important activities throughout the academic year."
-          image="/images/cultural.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834655/IMG_5553_hgls4k.jpg"
         />
         <div className="py-16 md:py-24 bg-card">
           <div className="container mx-auto px-4">

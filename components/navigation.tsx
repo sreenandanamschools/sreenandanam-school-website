@@ -32,33 +32,37 @@ export function Navigation() {
   }, []);
 
   const isTransparent = isHome && !scrolled && !isOpen;
+  const showAnnouncement = false; // Toggle this to true to show the announcement bar
 
   return (
     <>
       {/* Announcement bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-8 bg-[var(--gold)] overflow-hidden">
-        <div
-          className="marquee-track h-full flex items-center animate-marquee"
-          style={{ "--marquee-duration": "25s" } as React.CSSProperties}
-        >
-          {Array(6)
-            .fill(null)
-            .map((_, i) => (
-              <span
-                key={i}
-                className="whitespace-nowrap text-[var(--gold-foreground)] text-xs font-semibold px-12 tracking-widest uppercase"
-              >
-                Admissions Open for 2026–27 Academic Year &nbsp;·&nbsp; English
-                Medium Education from Class 1 to Class 7 &nbsp;·&nbsp;
-              </span>
-            ))}
+      {showAnnouncement && (
+        <div className="fixed top-0 left-0 right-0 z-50 h-8 bg-[var(--gold)] overflow-hidden">
+          <div
+            className="marquee-track h-full flex items-center animate-marquee"
+            style={{ "--marquee-duration": "25s" } as React.CSSProperties}
+          >
+            {Array(6)
+              .fill(null)
+              .map((_, i) => (
+                <span
+                  key={i}
+                  className="whitespace-nowrap text-[var(--gold-foreground)] text-xs font-semibold px-12 tracking-widest uppercase"
+                >
+                  Admissions Open for 2026–27 Academic Year &nbsp;·&nbsp; English
+                  Medium Education from Class 1 to Class 7 &nbsp;·&nbsp;
+                </span>
+              ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main nav */}
       <header
         className={cn(
-          "fixed top-8 left-0 right-0 z-40 transition-all duration-500",
+          "fixed left-0 right-0 z-40 transition-all duration-500",
+          showAnnouncement ? "top-8" : "top-0",
           isTransparent
             ? "bg-transparent border-transparent"
             : "bg-background/97 backdrop-blur-md border-b border-border shadow-sm",

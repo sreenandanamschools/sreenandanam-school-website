@@ -8,7 +8,7 @@ export function SchemaOrg() {
     "alternateName": "Sree Nandanam Schools",
     "url": "https://sreenandanamschools.com",
     "logo": "https://sreenandanamschools.com/images/logo.png",
-    "image": "https://sreenandanamschools.com/images/hero-school.jpg",
+    "image": "https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834655/IMG_5553_hgls4k.jpg",
     "description": "Sree Nandanam Public School offers high-quality primary and upper primary English medium education in Parassala, Thiruvananthapuram, Kerala. Established in 2008, we provide modern digital learning labs, experienced educators, and holistic child development.",
     "foundingDate": "2008",
     "address": [

@@ -23,7 +23,7 @@ export default function AdmissionsPage() {
           breadcrumb="Home / Admissions"
           title="Admissions"
           description="Join the Sree Nandanam family. We welcome applications for students from Class 1 to Class 7 for the upcoming academic year."
-          image="/images/library.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834654/IMG_5552_mkqrgx.jpg"
         />
         <AdmissionOverview />
         <AdmissionProcess />

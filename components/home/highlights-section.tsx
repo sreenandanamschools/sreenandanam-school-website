@@ -87,35 +87,6 @@ export function HighlightsSection() {
     <section ref={sectionRef} className="py-20 md:py-28 bg-background overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
 
-        {/* Section header — editorial style */}
-        <div className="flex items-end justify-between mb-12 md:mb-16">
-          <div className="max-w-xl">
-            <p className={cn(
-              "text-[var(--gold)] text-xs font-bold tracking-[0.2em] uppercase mb-4 transition-all duration-700",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}>
-              Why Choose Us
-            </p>
-            <h2 className={cn(
-              "font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight transition-all duration-700 delay-100",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}>
-              What Makes Us
-              <br />
-              <em>Different</em>
-            </h2>
-          </div>
-          <Link
-            href="/about"
-            className={cn(
-              "hidden md:inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-all duration-300 link-underline delay-200",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            Learn More <ArrowUpRight className="w-4 h-4" />
-          </Link>
-        </div>
-
         {/* Bento grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
 
@@ -124,20 +95,20 @@ export function HighlightsSection() {
           <Link
             href={highlights[0].href}
             className={cn(
-              "group col-span-2 row-span-1 rounded-lg p-6 md:p-8 bg-primary text-primary-foreground flex flex-col justify-between min-h-40 md:min-h-48 overflow-hidden relative transition-all duration-700",
+              "group col-span-2 row-span-1 rounded-lg p-6 md:p-8 bg-card border border-border text-card-foreground flex flex-col justify-between min-h-40 md:min-h-48 overflow-hidden relative transition-all duration-700 hover:border-primary/50",
               isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             )}
             style={{ transitionDelay: "100ms" }}
           >
-            <div className="absolute top-0 right-0 text-8xl font-serif font-bold text-white/5 leading-none select-none -translate-y-4 translate-x-4">
+            <div className="absolute top-0 right-0 text-8xl font-serif font-bold text-muted/10 leading-none select-none -translate-y-4 translate-x-4">
               {highlights[0].label}
             </div>
-            <Icon0 className="w-8 h-8 text-primary-foreground/80 mb-4" />
+            <Icon0 className="w-8 h-8 text-primary mb-4" />
             <div>
               <h3 className="font-serif text-2xl md:text-3xl font-bold mb-2">{highlights[0].title}</h3>
-              <p className="text-primary-foreground/75 text-sm leading-relaxed max-w-xs">{highlights[0].description}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">{highlights[0].description}</p>
             </div>
-            <ArrowUpRight className="absolute bottom-5 right-5 w-5 h-5 text-white/40 group-hover:text-white transition-colors duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 transform" />
+            <ArrowUpRight className="absolute bottom-5 right-5 w-5 h-5 text-muted-foreground/40 group-hover:text-primary transition-colors duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 transform" />
           </Link>
           ); })()}
 
@@ -146,18 +117,18 @@ export function HighlightsSection() {
           <Link
             href={highlights[1].href}
             className={cn(
-              "group col-span-1 row-span-2 rounded-lg p-6 bg-[var(--gold)] text-[var(--gold-foreground)] flex flex-col justify-between min-h-64 overflow-hidden relative transition-all duration-700",
+              "group col-span-1 row-span-2 rounded-lg p-6 bg-card border border-border text-card-foreground flex flex-col justify-between min-h-64 overflow-hidden relative transition-all duration-700 hover:border-primary/50",
               isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             )}
             style={{ transitionDelay: "200ms" }}
           >
-            <div className="absolute bottom-0 right-0 text-9xl font-serif font-bold text-[var(--gold-foreground)]/5 leading-none select-none translate-y-6 translate-x-2">
+            <div className="absolute bottom-0 right-0 text-9xl font-serif font-bold text-muted/10 leading-none select-none translate-y-6 translate-x-2">
               {highlights[1].label}
             </div>
-            <Icon1 className="w-7 h-7 text-[var(--gold-foreground)]/70 mb-3" />
+            <Icon1 className="w-7 h-7 text-primary mb-3" />
             <div>
               <h3 className="font-serif text-xl font-bold mb-2">{highlights[1].title}</h3>
-              <p className="text-[var(--gold-foreground)]/70 text-sm leading-relaxed">{highlights[1].description}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{highlights[1].description}</p>
             </div>
           </Link>
           ); })()}
@@ -167,15 +138,15 @@ export function HighlightsSection() {
           <Link
             href={highlights[2].href}
             className={cn(
-              "group col-span-1 row-span-1 rounded-lg p-5 bg-foreground text-background flex flex-col justify-between overflow-hidden relative transition-all duration-700",
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-card border border-border text-card-foreground flex flex-col justify-between overflow-hidden relative transition-all duration-700 hover:border-primary/50",
               isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             )}
             style={{ transitionDelay: "300ms" }}
           >
-            <Icon2 className="w-6 h-6 text-background/60 mb-3" />
+            <Icon2 className="w-6 h-6 text-primary mb-3" />
             <div>
-              <h3 className="font-semibold text-base mb-1">{highlights[2].title}</h3>
-              <p className="text-background/60 text-xs leading-relaxed">{highlights[2].description}</p>
+              <h3 className="font-semibold text-base mb-1 group-hover:text-primary transition-colors">{highlights[2].title}</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed">{highlights[2].description}</p>
             </div>
           </Link>
           ); })()}
@@ -185,12 +156,12 @@ export function HighlightsSection() {
           <Link
             href={highlights[3].href}
             className={cn(
-              "group col-span-1 row-span-1 rounded-lg p-5 bg-secondary border border-border hover:border-primary/30 flex flex-col justify-between transition-all duration-500",
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-card border border-border text-card-foreground flex flex-col justify-between overflow-hidden relative transition-all duration-700 hover:border-primary/50",
               isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             )}
             style={{ transitionDelay: "350ms" }}
           >
-            <Icon3 className="w-6 h-6 text-primary/60 mb-3 group-hover:text-primary transition-colors" />
+            <Icon3 className="w-6 h-6 text-primary mb-3" />
             <div>
               <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{highlights[3].title}</h3>
               <p className="text-muted-foreground text-xs leading-relaxed">{highlights[3].description}</p>
@@ -203,12 +174,12 @@ export function HighlightsSection() {
           <Link
             href={highlights[4].href}
             className={cn(
-              "group col-span-1 row-span-1 rounded-lg p-5 bg-card border border-border hover:border-primary/30 flex flex-col justify-between transition-all duration-500",
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-card border border-border text-card-foreground flex flex-col justify-between overflow-hidden relative transition-all duration-700 hover:border-primary/50",
               isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             )}
             style={{ transitionDelay: "400ms" }}
           >
-            <Icon4 className="w-6 h-6 text-primary/60 mb-3 group-hover:text-primary transition-colors" />
+            <Icon4 className="w-6 h-6 text-primary mb-3" />
             <div>
               <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{highlights[4].title}</h3>
               <p className="text-muted-foreground text-xs leading-relaxed">{highlights[4].description}</p>
@@ -221,7 +192,7 @@ export function HighlightsSection() {
           <Link
             href={highlights[5].href}
             className={cn(
-              "group col-span-1 row-span-1 rounded-lg p-5 bg-primary/5 border border-primary/15 hover:bg-primary/10 hover:border-primary/30 flex flex-col justify-between transition-all duration-500",
+              "group col-span-1 row-span-1 rounded-lg p-5 bg-card border border-border text-card-foreground flex flex-col justify-between overflow-hidden relative transition-all duration-700 hover:border-primary/50",
               isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             )}
             style={{ transitionDelay: "450ms" }}

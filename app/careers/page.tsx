@@ -45,7 +45,7 @@ export default function CareersPage() {
           breadcrumb="Home / Careers"
           title="Join Our Team"
           description="Empower the next generation. We are always looking for passionate educators and staff to join our vibrant learning community."
-          image="/images/cultural.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834655/IMG_5553_hgls4k.jpg"
         />
         
         {/* Why Join Us Section */}

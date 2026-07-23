@@ -21,7 +21,7 @@ export default function GalleryPage() {
           breadcrumb="Home / Gallery"
           title="Photo Gallery"
           description="A glimpse into the vibrant life at Sree Nandanam Public School through our collection of memorable moments."
-          image="/images/art-class.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834655/IMG_5553_hgls4k.jpg"
         />
         <GalleryGrid />
       </main>

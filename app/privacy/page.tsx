@@ -20,7 +20,7 @@ export default function PrivacyPolicyPage() {
           breadcrumb="Home / Privacy Policy"
           title="Privacy Policy"
           description="Last updated: May 2026"
-          image="/images/hero-school.jpg"
+          image="https://res.cloudinary.com/dsztu5qhz/image/upload/f_auto,q_auto/v1784834607/IMG_4737_njdz6h.jpg"
         />
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 max-w-4xl prose prose-slate md:prose-lg">
@@ -82,7 +82,7 @@ export default function PrivacyPolicyPage() {
               If you have any questions regarding this Privacy Policy, you may
               contact us at:
               <br />
-              <strong>Email:</strong> info@sreenandanamschools.com
+              <strong>Email:</strong> sreenandadnamschools@gmail.com
               <br />
               <strong>Phone:</strong> +91 XXXXX XXXXX
             </p>
